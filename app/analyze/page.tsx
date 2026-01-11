@@ -154,7 +154,7 @@ function FeatureInfo() {
     <Alert className="mb-6">
       <Info className="h-4 w-4" />
       <AlertDescription>
-        Search for any mobile app, select screenshots to analyze, and let Claude AI extract design patterns,
+        Search for any mobile app, select up to 6 screenshots to analyze, and let Claude AI extract design patterns,
         colors, typography, spacing, and component styles.
       </AlertDescription>
     </Alert>
@@ -182,6 +182,13 @@ const steps = [
     icon: FileJson,
   },
 ]
+
+// ============================================================================
+// Constants
+// ============================================================================
+
+/** Maximum number of screenshots that can be analyzed at once (API size limit) */
+const MAX_SCREENSHOTS = 6
 
 /**
  * AnalyzePage - Search for apps and analyze their design with Claude AI
@@ -216,7 +223,12 @@ export default function AnalyzePage() {
 
     // If app already has screenshots, use them directly
     if (app.screenshots && app.screenshots.length > 0) {
-      setScreenshots(app.screenshots)
+      // Only select the first MAX_SCREENSHOTS by default
+      const limitedScreenshots = app.screenshots.map((s, index) => ({
+        ...s,
+        selected: index < MAX_SCREENSHOTS,
+      }))
+      setScreenshots(limitedScreenshots)
       return
     }
 
@@ -231,7 +243,13 @@ export default function AnalyzePage() {
       const data = await response.json()
 
       if (data.success && data.data) {
-        setScreenshots(data.data.screenshots || [])
+        // Only select the first MAX_SCREENSHOTS by default
+        const screenshots = data.data.screenshots || []
+        const limitedScreenshots = screenshots.map((s: AppStoreScreenshot, index: number) => ({
+          ...s,
+          selected: index < MAX_SCREENSHOTS,
+        }))
+        setScreenshots(limitedScreenshots)
       } else {
         setScreenshotError(data.error?.message || "Failed to load screenshots")
         setScreenshots([])
@@ -270,6 +288,11 @@ export default function AnalyzePage() {
 
     if (selectedScreenshots.length === 0) {
       setAnalysisError("Please select at least one screenshot to analyze")
+      return
+    }
+
+    if (selectedScreenshots.length > MAX_SCREENSHOTS) {
+      setAnalysisError(`Too many screenshots selected. Please select ${MAX_SCREENSHOTS} or fewer screenshots to avoid API size limits.`)
       return
     }
 
@@ -426,12 +449,15 @@ export default function AnalyzePage() {
                         Screenshots
                       </CardTitle>
                       <CardDescription>
-                        Select screenshots to analyze ({selectedCount} selected)
+                        Select screenshots to analyze ({selectedCount} selected, max {MAX_SCREENSHOTS})
+                        {selectedCount > MAX_SCREENSHOTS && (
+                          <span className="text-destructive ml-1">- Too many selected!</span>
+                        )}
                       </CardDescription>
                     </div>
                     <Button
                       onClick={handleAnalyze}
-                      disabled={isAnalyzing || selectedCount === 0}
+                      disabled={isAnalyzing || selectedCount === 0 || selectedCount > MAX_SCREENSHOTS}
                       size="lg"
                       className="gap-2"
                     >
