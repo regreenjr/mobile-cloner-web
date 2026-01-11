@@ -1,0 +1,135 @@
+{
+  "category": "Uncategorized",
+  "description": "Initialize Next.js 15 project with App Router, Tailwind CSS, and shadcn/ui.\n\nAcceptance Criteria:\n- Next.js 15 with App Router\n- TypeScript strict mode\n- Tailwind CSS configured\n- shadcn/ui initialized with components: button, input, card, skeleton, alert, tabs, badge, dialog\n- Basic layout with header navigation (Analyze, Compare, Design)\n- Dark mode toggle\n- Environment variables setup (.env.local.example)\n- Basic pages created: app/page.tsx, app/analyze/page.tsx, app/compare/page.tsx, app/design/page.tsx\n\nCommands to run:\nnpx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=false\nnpx shadcn@latest init\nnpx shadcn@latest add button input card skeleton alert tabs badge dialog\n\nNote: Project may already have lib/ files copied from mobile version. Keep those.",
+  "title": "Next.js Scaffold + shadcn Setup",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 1,
+  "planningMode": "full",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768084784027-6u7tyipc3",
+  "descriptionHistory": [
+    {
+      "description": "Initialize Next.js 15 project with App Router, Tailwind CSS, and shadcn/ui.\n\nAcceptance Criteria:\n- Next.js 15 with App Router\n- TypeScript strict mode\n- Tailwind CSS configured\n- shadcn/ui initialized with components: button, input, card, skeleton, alert, tabs, badge, dialog\n- Basic layout with header navigation (Analyze, Compare, Design)\n- Dark mode toggle\n- Environment variables setup (.env.local.example)\n- Basic pages created: app/page.tsx, app/analyze/page.tsx, app/compare/page.tsx, app/design/page.tsx\n\nCommands to run:\nnpx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=false\nnpx shadcn@latest init\nnpx shadcn@latest add button input card skeleton alert tabs badge dialog\n\nNote: Project may already have lib/ files copied from mobile version. Keep those.",
+      "timestamp": "2026-01-10T22:39:44.171Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T22:39:56.080Z",
+  "updatedAt": "2026-01-10T23:03:19.532Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Bash\nInput: {\n  \"command\": \"ls -la\",\n  \"description\": \"List current directory contents\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.{ts,tsx,js,json}\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/claude.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/index.ts\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"ls -la lib/ types/ supabase/\",\n  \"description\": \"List lib, types, supabase directories\"\n}\n---\n\n# Comprehensive Specification: Initialize Next.js 15 Project\n\n## 1. Problem Statement\n\nThe project needs a modern web application foundation to build a mobile app analyzer and design tool. Currently, there are only existing TypeScript library files (`lib/` and `types/`) from a mobile version that need to be preserved while setting up a fresh Next.js 15 application with App Router, TypeScript strict mode, Tailwind CSS, and shadcn/ui components.\n\n## 2. User Story\n\nAs a **developer**, I want **a properly configured Next.js 15 project with App Router, Tailwind CSS, and shadcn/ui**, so that **I can build a modern web application for analyzing, comparing, and designing mobile apps with a consistent design system and dark mode support**.\n\n## 3. Acceptance Criteria\n\n### Happy Path\n- **GIVEN** an empty project with existing `lib/` and `types/` directories\n- **WHEN** the setup is complete\n- **THEN** Next.js 15 runs with App Router, TypeScript strict mode is enabled, Tailwind CSS is configured, shadcn/ui is initialized with 8 components (button, input, card, skeleton, alert, tabs, badge, dialog), basic layout with header navigation exists, dark mode toggle works, and pages are created for home, analyze, compare, and design routes\n\n### Edge Cases\n- **GIVEN** existing `lib/` and `types/` files in the project\n- **WHEN** Next.js is initialized\n- **THEN** the existing files are preserved and not overwritten\n\n### Error Handling\n- **GIVEN** any configuration step fails\n- **WHEN** the error is encountered\n- **THEN** the system should provide clear error messages and allow for manual intervention\n\n## 4. Technical Context\n\n| Aspect | Value |\n|--------|-------|\n| Affected Files | `package.json`, `tsconfig.json`, `tailwind.config.ts`, `next.config.ts`, `components.json`, `app/layout.tsx`, `app/page.tsx`, `app/analyze/page.tsx`, `app/compare/page.tsx`, `app/design/page.tsx`, `app/globals.css`, `.env.local.example`, `components/ui/*`, `components/theme-provider.tsx`, `components/header.tsx` |\n| Dependencies | next@15, react@19, tailwindcss, @radix-ui/*, class-variance-authority, clsx, tailwind-merge, lucide-react, next-themes |\n| Constraints | Must preserve existing `lib/` and `types/` directories, must use App Router (not Pages Router) |\n| Patterns to Follow | Existing TypeScript patterns from `lib/claude.ts`, use `@/` path alias for imports |\n\n## 5. Non-Goals\n\n- Database setup or Supabase integration (separate task)\n- Authentication implementation\n- API routes implementation\n- Full page content implementation (only basic placeholder pages)\n- Mobile responsiveness optimization (basic only)\n- Testing setup (separate task)\n\n## 6. Implementation Tasks\n\n```tasks\n## Phase 1: Foundation - Next.js Setup\n- [ ] T001: Initialize Next.js 15 project with TypeScript, Tailwind, ESLint, and App Router | File: package.json\n- [ ] T002: Configure TypeScript strict mode and path aliases | File: tsconfig.json\n- [ ] T003: Create environment variables example file | File: .env.local.example\n\n## Phase 2: UI Framework - shadcn/ui Setup\n- [ ] T004: Initialize shadcn/ui with default configuration | File: components.json\n- [ ] T005: Add shadcn/ui components (button, input, card, skeleton, alert, tabs, badge, dialog) | File: components/ui/*\n\n## Phase 3: Theme & Layout\n- [ ] T006: Configure dark mode with next-themes provider | File: components/theme-provider.tsx\n- [ ] T007: Create header component with navigation (Analyze, Compare, Design) and dark mode toggle | File: components/header.tsx\n- [ ] T008: Update root layout with theme provider and header | File: app/layout.tsx\n- [ ] T009: Configure global styles and CSS variables for dark mode | File: app/globals.css\n\n## Phase 4: Pages Setup\n- [ ] T010: Create home page with app overview | File: app/page.tsx\n- [ ] T011: Create analyze page placeholder | File: app/analyze/page.tsx\n- [ ] T012: Create compare page placeholder | File: app/compare/page.tsx\n- [ ] T013: Create design page placeholder | File: app/design/page.tsx\n```\n\n## 7. Success Metrics\n\n| Metric | Criteria |\n|--------|----------|\n| Build Success | `npm run build` completes without errors |\n| Dev Server | `npm run dev` starts successfully on port 3000 |\n| TypeScript | No TypeScript errors with strict mode enabled |\n| Components | All 8 shadcn/ui components are installed and importable |\n| Navigation | Header shows all navigation links and they route correctly |\n| Dark Mode | Toggle switches between light and dark themes |\n| Existing Code | `lib/` and `types/` directories remain intact and unchanged |\n\n## 8. Risks & Mitigations\n\n| Risk | Mitigation |\n|------|------------|\n| Next.js init may prompt for overwrites | Use `--yes` flag and verify existing files are preserved |\n| shadcn/ui version compatibility | Use latest stable versions with @latest tag |\n| Path alias conflicts with existing code | Configure `@/` to match existing import patterns in `lib/` |\n| CSS variable conflicts | Use shadcn/ui default CSS variables which are well-tested |\n\n---",
+    "generatedAt": "2026-01-10T22:40:35.178Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Initialize Next.js 15 project with TypeScript, Tailwind, ESLint, and App Router",
+        "filePath": "package.json",
+        "phase": "Phase 1: Foundation - Next.js Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Configure TypeScript strict mode and path aliases",
+        "filePath": "tsconfig.json",
+        "phase": "Phase 1: Foundation - Next.js Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Create environment variables example file",
+        "filePath": ".env.local.example",
+        "phase": "Phase 1: Foundation - Next.js Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Initialize shadcn/ui with default configuration",
+        "filePath": "components.json",
+        "phase": "Phase 2: UI Framework - shadcn/ui Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Add shadcn/ui components (button, input, card, skeleton, alert, tabs, badge, dialog)",
+        "filePath": "components/ui/*",
+        "phase": "Phase 2: UI Framework - shadcn/ui Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Configure dark mode with next-themes provider",
+        "filePath": "components/theme-provider.tsx",
+        "phase": "Phase 3: Theme & Layout",
+        "status": "pending"
+      },
+      {
+        "id": "T007",
+        "description": "Create header component with navigation (Analyze, Compare, Design) and dark mode toggle",
+        "filePath": "components/header.tsx",
+        "phase": "Phase 3: Theme & Layout",
+        "status": "pending"
+      },
+      {
+        "id": "T008",
+        "description": "Update root layout with theme provider and header",
+        "filePath": "app/layout.tsx",
+        "phase": "Phase 3: Theme & Layout",
+        "status": "pending"
+      },
+      {
+        "id": "T009",
+        "description": "Configure global styles and CSS variables for dark mode",
+        "filePath": "app/globals.css",
+        "phase": "Phase 3: Theme & Layout",
+        "status": "pending"
+      },
+      {
+        "id": "T010",
+        "description": "Create home page with app overview",
+        "filePath": "app/page.tsx",
+        "phase": "Phase 4: Pages Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T011",
+        "description": "Create analyze page placeholder",
+        "filePath": "app/analyze/page.tsx",
+        "phase": "Phase 4: Pages Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T012",
+        "description": "Create compare page placeholder",
+        "filePath": "app/compare/page.tsx",
+        "phase": "Phase 4: Pages Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T013",
+        "description": "Create design page placeholder",
+        "filePath": "app/design/page.tsx",
+        "phase": "Phase 4: Pages Setup",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 13,
+    "tasksCompleted": 13,
+    "approvedAt": "2026-01-10T22:40:35.187Z",
+    "currentTaskId": "T013"
+  },
+  "justFinishedAt": "2026-01-10T23:03:19.532Z"
+}

@@ -1,0 +1,80 @@
+{
+  "category": "Uncategorized",
+  "description": "Generate design directions based on analyzed app.\n\nAcceptance Criteria:\n- Create app/design/page.tsx\n- Create components/DesignDirectionCard.tsx:\n  - Shows direction name and description\n  - Color palette preview (swatches)\n  - Typography preview\n  - Component style preview\n  - Vote button\n- Generate 4 distinct design directions using Claude\n- Each direction includes:\n  - Name and description\n  - Color palette (primary, secondary, accent, backgrounds)\n  - Typography scale (font families, sizes)\n  - Spacing scale\n  - Component patterns (buttons, cards, inputs)\n- Save to Supabase design_directions table\n- Allow voting on directions\n- Export selected direction as:\n  - Tailwind config\n  - CSS variables\n  - Design tokens JSON",
+  "title": "Design Direction Generator",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 2,
+  "planningMode": "spec",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768085233330-u5dtrmu9l",
+  "descriptionHistory": [
+    {
+      "description": "Generate design directions based on analyzed app.\n\nAcceptance Criteria:\n- Create app/design/page.tsx\n- Create components/DesignDirectionCard.tsx:\n  - Shows direction name and description\n  - Color palette preview (swatches)\n  - Typography preview\n  - Component style preview\n  - Vote button\n- Generate 4 distinct design directions using Claude\n- Each direction includes:\n  - Name and description\n  - Color palette (primary, secondary, accent, backgrounds)\n  - Typography scale (font families, sizes)\n  - Spacing scale\n  - Component patterns (buttons, cards, inputs)\n- Save to Supabase design_directions table\n- Allow voting on directions\n- Export selected direction as:\n  - Tailwind config\n  - CSS variables\n  - Design tokens JSON",
+      "timestamp": "2026-01-10T22:47:13.473Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-11T00:13:06.030Z",
+  "updatedAt": "2026-01-11T00:30:56.966Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/schema.sql\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/tailwind.config.*\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/supabase/**/*.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/design/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/supabase/db.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/analyze/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/card.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/button.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/database.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/design.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"app/api/**/*.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/api/analyze/route.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/analyze.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/layout.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"lib/utils.ts\"\n}\n## Specification: Generate Design Directions Based on Analyzed App\n\n---\n\n### 1. **Problem**\nUsers who have analyzed mobile apps need AI-generated design directions that provide actionable design systems (colors, typography, components) they can vote on, select, and export as usable design tokens for their projects.\n\n---\n\n### 2. **Solution**\nCreate a design directions page that uses Claude AI to generate 4 distinct design directions based on analyzed app data, displays them with interactive previews (color swatches, typography, component patterns), enables voting/selection, saves to Supabase, and exports the selected direction as Tailwind config, CSS variables, and design tokens JSON.\n\n---\n\n### 3. **Acceptance Criteria**\n\n- **GIVEN** a user navigates to `/design`, **WHEN** the page loads, **THEN** they should see options to select an analyzed app and generate design directions.\n\n- **GIVEN** an analyzed app is selected, **WHEN** the user clicks \"Generate Directions\", **THEN** 4 distinct design directions are generated using Claude AI and saved to Supabase.\n\n- **GIVEN** design directions are displayed, **WHEN** a user views a DesignDirectionCard, **THEN** they see the direction name, description, color palette swatches, typography preview, and component style preview.\n\n- **GIVEN** a user wants to vote, **WHEN** they click the vote button on a direction, **THEN** their vote is recorded in Supabase and the vote count updates.\n\n- **GIVEN** a user selects a direction, **WHEN** they choose to export, **THEN** they can download the design as Tailwind config, CSS variables, or design tokens JSON.\n\n---\n\n### 4. **Files to Modify**\n\n| File | Purpose | Action |\n|------|---------|--------|\n| `app/design/page.tsx` | Main design directions page with app selection and generation | modify |\n| `components/DesignDirectionCard.tsx` | Card component showing direction preview with voting | create |\n| `components/DesignDirectionExport.tsx` | Export dialog for Tailwind/CSS/JSON exports | create |\n| `app/api/design/generate/route.ts` | API endpoint to generate design directions via Claude | create |\n| `app/api/design/vote/route.ts` | API endpoint to handle voting on directions | create |\n| `lib/design-tokens.ts` | Utilities for exporting design tokens in different formats | create |\n\n---\n\n### 5. **Implementation Tasks**\n\n```tasks\n- [ ] T001: Create design token export utility functions (Tailwind config, CSS variables, JSON) | File: lib/design-tokens.ts\n- [ ] T002: Create API route for generating design directions with Claude AI | File: app/api/design/generate/route.ts\n- [ ] T003: Create API route for voting on design directions | File: app/api/design/vote/route.ts\n- [ ] T004: Create DesignDirectionCard component with color/typography/component previews | File: components/DesignDirectionCard.tsx\n- [ ] T005: Create DesignDirectionExport dialog component for export options | File: components/DesignDirectionExport.tsx\n- [ ] T006: Update design page with app selection, generation UI, and directions display | File: app/design/page.tsx\n```\n\n---\n\n### 6. **Verification**\n\n1. Navigate to `/design` and verify the page displays analyzed apps for selection\n2. Select an analyzed app and click \"Generate Directions\" - verify 4 directions appear\n3. Verify each DesignDirectionCard shows: name, description, color swatches, typography preview, component preview, vote button\n4. Click vote on a direction and verify the vote count updates (check Supabase)\n5. Select a direction and export as:\n   - Tailwind config - verify valid `tailwind.config.js` content\n   - CSS variables - verify valid `:root { --var: value }` format\n   - Design tokens JSON - verify DTCG-compliant JSON structure\n6. Refresh page and verify directions persist from Supabase\n\n---\n\n\"",
+    "generatedAt": "2026-01-11T00:13:54.308Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Create design token export utility functions (Tailwind config, CSS variables, JSON)",
+        "filePath": "lib/design-tokens.ts",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Create API route for generating design directions with Claude AI",
+        "filePath": "app/api/design/generate/route.ts",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Create API route for voting on design directions",
+        "filePath": "app/api/design/vote/route.ts",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Create DesignDirectionCard component with color/typography/component previews",
+        "filePath": "components/DesignDirectionCard.tsx",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Create DesignDirectionExport dialog component for export options",
+        "filePath": "components/DesignDirectionExport.tsx",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Update design page with app selection, generation UI, and directions display",
+        "filePath": "app/design/page.tsx",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 6,
+    "tasksCompleted": 6,
+    "approvedAt": "2026-01-11T00:13:54.314Z",
+    "currentTaskId": "T006"
+  },
+  "justFinishedAt": "2026-01-11T00:30:56.966Z"
+}

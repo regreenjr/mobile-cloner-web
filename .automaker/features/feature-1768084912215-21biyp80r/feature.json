@@ -1,0 +1,114 @@
+{
+  "category": "Uncategorized",
+  "description": "Configure Supabase clients for Next.js (browser and server).\n\nAcceptance Criteria:\n- Install @supabase/supabase-js and @supabase/ssr\n- Create lib/supabase/client.ts (browser client)\n- Create lib/supabase/server.ts (server client for API routes)\n- Create lib/supabase/db.ts with typed database operations:\n  - referenceApps: getAll, getById, create, update, delete\n  - appFeatures: getByAppId, createMany\n  - appComparisons: create, getById, getAll\n  - designDirections: create, getByProjectId, vote, select\n- Add types for database tables in types/database.ts\n- Test connection works\n\nEnvironment variables needed:\nNEXT_PUBLIC_SUPABASE_URL=\nNEXT_PUBLIC_SUPABASE_ANON_KEY=",
+  "title": "Supabase Client Setup",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 1,
+  "planningMode": "full",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768084912215-21biyp80r",
+  "descriptionHistory": [
+    {
+      "description": "Configure Supabase clients for Next.js (browser and server).\n\nAcceptance Criteria:\n- Install @supabase/supabase-js and @supabase/ssr\n- Create lib/supabase/client.ts (browser client)\n- Create lib/supabase/server.ts (server client for API routes)\n- Create lib/supabase/db.ts with typed database operations:\n  - referenceApps: getAll, getById, create, update, delete\n  - appFeatures: getByAppId, createMany\n  - appComparisons: create, getById, getAll\n  - designDirections: create, getByProjectId, vote, select\n- Add types for database tables in types/database.ts\n- Test connection works\n\nEnvironment variables needed:\nNEXT_PUBLIC_SUPABASE_URL=\nNEXT_PUBLIC_SUPABASE_ANON_KEY=",
+      "timestamp": "2026-01-10T22:41:52.422Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T22:48:38.671Z",
+  "updatedAt": "2026-01-10T23:00:01.793Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/package.json\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/types/**/*\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/lib/**/*\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/package.json\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/database.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/index.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/claude.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/layout.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/design.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/analyze.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/app/api/**/*\"\n}\n# Specification: Configure Supabase Clients for Next.js\n\n---\n\n## 1. Problem Statement\n\nThe application needs to interact with a Supabase database for persisting reference apps, app features, app comparisons, and design directions. Currently, there are no Supabase client configurations for either browser-side or server-side operations in the Next.js application. We need to establish a typed Supabase client setup that supports both client and server contexts with full TypeScript support.\n\n---\n\n## 2. User Story\n\n**As a** developer working on the mobile-cloner-web application,  \n**I want** properly configured Supabase clients for both browser and server contexts,  \n**so that** I can perform type-safe database operations for reference apps, features, comparisons, and design directions.\n\n---\n\n## 3. Acceptance Criteria\n\n### Happy Path\n- **GIVEN** the environment variables `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set,\n- **WHEN** importing the browser client from `lib/supabase/client.ts`,\n- **THEN** a singleton Supabase client is returned that can be used for browser-side queries.\n\n- **GIVEN** the environment variables are set,\n- **WHEN** importing the server client from `lib/supabase/server.ts`,\n- **THEN** a Supabase client configured for server context (using cookies) is returned.\n\n- **GIVEN** a valid Supabase client,\n- **WHEN** calling `referenceApps.getAll()` from `lib/supabase/db.ts`,\n- **THEN** all reference apps are returned with proper TypeScript types.\n\n### Edge Cases\n- **GIVEN** no screenshots exist for a reference app,\n- **WHEN** calling `referenceApps.getById(id)`,\n- **THEN** the app is returned with an empty screenshots array.\n\n- **GIVEN** a design direction with no votes,\n- **WHEN** calling `designDirections.vote()`,\n- **THEN** the vote count increments from 0 to 1 correctly.\n\n### Error Handling\n- **GIVEN** missing environment variables,\n- **WHEN** attempting to create a Supabase client,\n- **THEN** an error is thrown with a descriptive message about the missing configuration.\n\n- **GIVEN** a database operation fails,\n- **WHEN** any db operation is called,\n- **THEN** a typed error result is returned following the Result pattern.\n\n---\n\n## 4. Technical Context\n\n| Aspect | Value |\n|--------|-------|\n| Affected Files | `lib/supabase/client.ts`, `lib/supabase/server.ts`, `lib/supabase/db.ts`, `types/database.ts`, `package.json` |\n| Dependencies | `@supabase/supabase-js`, `@supabase/ssr` |\n| Constraints | Must work with Next.js 16.1.1, React 19.2.3; Server client must use cookies for SSR |\n| Patterns to Follow | Result pattern from `types/analyze.ts` and `types/design.ts`, existing Database types in `types/database.ts` |\n\n---\n\n## 5. Non-Goals\n\n- **Authentication/Authorization**: This feature does not implement user authentication flows\n- **Row Level Security policies**: Database security policies are assumed to be configured in Supabase dashboard\n- **Real-time subscriptions**: This feature implements basic CRUD, not real-time features\n- **Storage operations**: File uploads to Supabase Storage are not included (covered by existing bucket configs)\n- **Migration scripts**: Database schema migrations are not included (already referenced in types/database.ts)\n\n---\n\n## 6. Implementation Tasks\n\n```tasks\n## Phase 1: Foundation - Package Installation & Client Setup\n- [ ] T001: Install @supabase/supabase-js and @supabase/ssr packages | File: package.json\n- [ ] T002: Create browser Supabase client with singleton pattern | File: lib/supabase/client.ts\n- [ ] T003: Create server Supabase client with cookie handling | File: lib/supabase/server.ts\n\n## Phase 2: Core Implementation - Database Operations\n- [ ] T004: Create typed database operations for referenceApps (getAll, getById, create, update, delete) | File: lib/supabase/db.ts\n- [ ] T005: Add typed database operations for appFeatures (getByAppId, createMany) | File: lib/supabase/db.ts\n- [ ] T006: Add typed database operations for appComparisons (create, getById, getAll) | File: lib/supabase/db.ts\n- [ ] T007: Add typed database operations for designDirections (create, getByProjectId, vote, select) | File: lib/supabase/db.ts\n\n## Phase 3: Integration & Testing\n- [ ] T008: Create index barrel export for supabase module | File: lib/supabase/index.ts\n- [ ] T009: Add environment variable validation helper | File: lib/supabase/client.ts\n- [ ] T010: Create connection test utility function | File: lib/supabase/db.ts\n```\n\n---\n\n## 7. Success Metrics\n\n- [ ] `npm install` completes without errors after adding Supabase packages\n- [ ] `lib/supabase/client.ts` exports a typed `createBrowserClient` function\n- [ ] `lib/supabase/server.ts` exports a typed `createServerClient` function  \n- [ ] `lib/supabase/db.ts` exports all required CRUD operations for 4 tables\n- [ ] All database operations return `Result<T, Error>` types\n- [ ] TypeScript compilation passes with no errors (`npm run build`)\n- [ ] Connection test function can verify Supabase connectivity when env vars are set\n\n---\n\n## 8. Risks & Mitigations\n\n| Risk | Mitigation |\n|------|------------|\n| Environment variables not set in production | Add runtime validation with clear error messages; document required variables |\n| Type mismatches between Database types and actual schema | Existing types/database.ts already matches expected schema; use strict typing |\n| Cookie handling complexity in server context | Use @supabase/ssr which handles Next.js cookie integration |\n| Singleton client memory leaks | Use module-level caching pattern similar to existing lib/claude.ts |\n| Breaking changes in Supabase packages | Pin to specific versions in package.json |\n\n---",
+    "generatedAt": "2026-01-10T22:42:41.053Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Install @supabase/supabase-js and @supabase/ssr packages",
+        "filePath": "package.json",
+        "phase": "Phase 1: Foundation - Package Installation & Client Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Create browser Supabase client with singleton pattern",
+        "filePath": "lib/supabase/client.ts",
+        "phase": "Phase 1: Foundation - Package Installation & Client Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Create server Supabase client with cookie handling",
+        "filePath": "lib/supabase/server.ts",
+        "phase": "Phase 1: Foundation - Package Installation & Client Setup",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Create typed database operations for referenceApps (getAll, getById, create, update, delete)",
+        "filePath": "lib/supabase/db.ts",
+        "phase": "Phase 2: Core Implementation - Database Operations",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Add typed database operations for appFeatures (getByAppId, createMany)",
+        "filePath": "lib/supabase/db.ts",
+        "phase": "Phase 2: Core Implementation - Database Operations",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Add typed database operations for appComparisons (create, getById, getAll)",
+        "filePath": "lib/supabase/db.ts",
+        "phase": "Phase 2: Core Implementation - Database Operations",
+        "status": "pending"
+      },
+      {
+        "id": "T007",
+        "description": "Add typed database operations for designDirections (create, getByProjectId, vote, select)",
+        "filePath": "lib/supabase/db.ts",
+        "phase": "Phase 2: Core Implementation - Database Operations",
+        "status": "pending"
+      },
+      {
+        "id": "T008",
+        "description": "Create index barrel export for supabase module",
+        "filePath": "lib/supabase/index.ts",
+        "phase": "Phase 3: Integration & Testing",
+        "status": "pending"
+      },
+      {
+        "id": "T009",
+        "description": "Add environment variable validation helper",
+        "filePath": "lib/supabase/client.ts",
+        "phase": "Phase 3: Integration & Testing",
+        "status": "pending"
+      },
+      {
+        "id": "T010",
+        "description": "Create connection test utility function",
+        "filePath": "lib/supabase/db.ts",
+        "phase": "Phase 3: Integration & Testing",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 10,
+    "tasksCompleted": 3,
+    "approvedAt": "2026-01-10T22:42:41.068Z",
+    "currentTaskId": "T004"
+  },
+  "justFinishedAt": "2026-01-10T23:00:01.793Z"
+}

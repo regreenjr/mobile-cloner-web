@@ -1,0 +1,80 @@
+{
+  "category": "Uncategorized",
+  "description": "Compare multiple analyzed apps side-by-side.\n\nAcceptance Criteria:\n- Create app/compare/page.tsx\n- Create components/ComparisonTable.tsx:\n  - Select 2-4 apps from previously analyzed\n  - Matrix view: features as rows, apps as columns\n  - Highlight shared vs unique features\n  - Design comparison: colors, typography, patterns\n- Create components/AppSelector.tsx:\n  - Multi-select dropdown\n  - Shows app icon and name\n  - Max 4 selections\n- Save comparison to Supabase app_comparisons table\n- Export comparison as markdown\n\nUse Claude to generate insights about similarities and differences.",
+  "title": "Compare Apps Feature",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 2,
+  "planningMode": "spec",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768085198256-tnwx6bj5g",
+  "descriptionHistory": [
+    {
+      "description": "Compare multiple analyzed apps side-by-side.\n\nAcceptance Criteria:\n- Create app/compare/page.tsx\n- Create components/ComparisonTable.tsx:\n  - Select 2-4 apps from previously analyzed\n  - Matrix view: features as rows, apps as columns\n  - Highlight shared vs unique features\n  - Design comparison: colors, typography, patterns\n- Create components/AppSelector.tsx:\n  - Multi-select dropdown\n  - Shows app icon and name\n  - Max 4 selections\n- Save comparison to Supabase app_comparisons table\n- Export comparison as markdown\n\nUse Claude to generate insights about similarities and differences.",
+      "timestamp": "2026-01-10T22:46:38.405Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T23:49:09.143Z",
+  "updatedAt": "2026-01-11T00:12:19.769Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.{tsx,ts}\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/components/**/*.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/app/**/*.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/compare/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/analyze/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/analyze.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/AnalysisResults.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/dialog.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/app-search/page.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/lib/**/*.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/api/**/*.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/api/analyze/route.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/appStoreService.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/appStore.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"lib/supabase/**/*.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/AppSearchInput.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/supabase/db.ts\"\n}\n# Specification: Compare Multiple Analyzed Apps Side-by-Side\n\n## 1. **Problem**\nUsers who have analyzed multiple mobile apps need a way to compare them side-by-side to understand similarities, differences, and unique features across apps. Currently, the compare page is a placeholder with upload areas but no actual comparison functionality for previously analyzed apps.\n\n## 2. **Solution**\nReplace the existing placeholder compare page with a fully functional comparison tool that allows users to select 2-4 previously analyzed apps, displays them in a matrix view (features as rows, apps as columns), generates AI-powered insights about similarities and differences, saves comparisons to Supabase, and exports results as markdown.\n\n## 3. **Acceptance Criteria**\n\n- **GIVEN** a user has previously analyzed apps, **WHEN** they visit the compare page, **THEN** they can select 2-4 apps from a multi-select dropdown showing app icons and names\n\n- **GIVEN** the user has selected 2-4 apps, **WHEN** the comparison view loads, **THEN** a matrix view displays features as rows and apps as columns with shared features highlighted differently from unique features\n\n- **GIVEN** the comparison is generated, **WHEN** the user views the results, **THEN** they see AI-generated insights about design patterns, colors, typography, and feature similarities/differences\n\n- **GIVEN** a comparison is complete, **WHEN** the user clicks \"Save Comparison\", **THEN** the comparison data is saved to the Supabase app_comparisons table\n\n- **GIVEN** a comparison is complete, **WHEN** the user clicks \"Export as Markdown\", **THEN** a markdown file is downloaded containing the full comparison report\n\n## 4. **Files to Modify**\n\n| File | Purpose | Action |\n|------|---------|--------|\n| `app/compare/page.tsx` | Main compare page with app selection and comparison display | modify |\n| `components/ComparisonTable.tsx` | Matrix view component showing features vs apps | create |\n| `components/AppSelector.tsx` | Multi-select dropdown for selecting analyzed apps | create |\n| `lib/comparison.ts` | Comparison logic and markdown export utilities | create |\n| `app/api/compare/route.ts` | API route for generating AI-powered comparison insights | create |\n| `types/analyze.ts` | Already has `AppComparison` type, may need minor updates | modify |\n\n## 5. **Implementation Tasks**\n\n```tasks\n- [ ] T001: Create AppSelector component with multi-select dropdown | File: components/AppSelector.tsx\n- [ ] T002: Create ComparisonTable component with matrix view | File: components/ComparisonTable.tsx\n- [ ] T003: Create comparison utility functions and markdown export | File: lib/comparison.ts\n- [ ] T004: Create API route for AI-powered comparison generation | File: app/api/compare/route.ts\n- [ ] T005: Update compare page with full comparison functionality | File: app/compare/page.tsx\n- [ ] T006: Add comparison insights section with Claude integration | File: components/ComparisonTable.tsx\n```\n\n## 6. **Verification**\n\n1. Navigate to `/compare` page with at least 2 analyzed apps in the database\n2. Verify AppSelector shows all analyzed apps with icons and names\n3. Select 2-4 apps and verify matrix comparison table renders correctly\n4. Confirm shared features are highlighted green, unique features highlighted with app-specific colors\n5. Verify \"Save Comparison\" saves to Supabase and shows success message\n6. Verify \"Export as Markdown\" downloads a properly formatted markdown file\n7. Test that AI insights are generated and displayed for the selected apps",
+    "generatedAt": "2026-01-10T23:50:02.153Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Create AppSelector component with multi-select dropdown",
+        "filePath": "components/AppSelector.tsx",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Create ComparisonTable component with matrix view",
+        "filePath": "components/ComparisonTable.tsx",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Create comparison utility functions and markdown export",
+        "filePath": "lib/comparison.ts",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Create API route for AI-powered comparison generation",
+        "filePath": "app/api/compare/route.ts",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Update compare page with full comparison functionality",
+        "filePath": "app/compare/page.tsx",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Add comparison insights section with Claude integration",
+        "filePath": "components/ComparisonTable.tsx",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 6,
+    "tasksCompleted": 6,
+    "approvedAt": "2026-01-10T23:50:02.180Z",
+    "currentTaskId": "T006"
+  },
+  "justFinishedAt": "2026-01-11T00:12:19.769Z"
+}

@@ -1,0 +1,142 @@
+{
+  "category": "Uncategorized",
+  "description": "Display Claude analysis results in a clean, organized UI.\n\nAcceptance Criteria:\n- Create app/analyze/[id]/page.tsx for analysis results\n- Create components/AnalysisResults.tsx with sections:\n  - Design Patterns (colors, typography, spacing, components)\n  - Feature List (core, nice-to-have, differentiators)\n  - UI Patterns (navigation, cards, forms, modals)\n  - User Flow summary\n- Tabbed interface for different sections\n- Export as markdown button\n- Save to Supabase button\n- Loading state with skeletons\n- Error state with retry button\n\nDesign should be clean and scannable - use cards, badges, and clear hierarchy.",
+  "title": "Analysis Results UI",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 1,
+  "planningMode": "full",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768084994312-pf1yqibqs",
+  "descriptionHistory": [
+    {
+      "description": "Display Claude analysis results in a clean, organized UI.\n\nAcceptance Criteria:\n- Create app/analyze/[id]/page.tsx for analysis results\n- Create components/AnalysisResults.tsx with sections:\n  - Design Patterns (colors, typography, spacing, components)\n  - Feature List (core, nice-to-have, differentiators)\n  - UI Patterns (navigation, cards, forms, modals)\n  - User Flow summary\n- Tabbed interface for different sections\n- Export as markdown button\n- Save to Supabase button\n- Loading state with skeletons\n- Error state with retry button\n\nDesign should be clean and scannable - use cards, badges, and clear hierarchy.",
+      "timestamp": "2026-01-10T22:43:14.449Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T23:40:51.207Z",
+  "updatedAt": "2026-01-11T00:11:56.146Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/*.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/components/**/*.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/baselmaani/Desktop/projects/ai-project-deigner/package.json\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/package.json\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/analyze/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/tabs.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/card.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/badge.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/skeleton.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/button.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/alert.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/utils.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/lib/**/*.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/types/**/*\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/analyze.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/design.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/index.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/claude.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/analysisCache.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/layout.tsx\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"**/app/api/**/*.ts\"\n}\n\n🔧 Tool: Grep\nInput: {\n  \"pattern\": \"supabase\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\",\n  \"glob\": \"*.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/supabase/db.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/database.ts\"\n}\n---\n\n# Specification: Display Claude Analysis Results UI\n\n## 1. Problem Statement\n\nUsers who analyze mobile apps using Claude AI currently have no way to view the analysis results in a structured, organized format. After Claude processes app screenshots and generates detailed analysis data (design patterns, features, UI patterns, user flows), users need a dedicated page to explore these insights in a clean, scannable interface with the ability to export or save the results.\n\n## 2. User Story\n\nAs a **product designer or developer**, I want **to view Claude's app analysis results in an organized, tabbed interface**, so that **I can easily understand and reference the extracted design patterns, features, UI patterns, and user flow summaries from competitor apps**.\n\n## 3. Acceptance Criteria\n\n### Happy Path\n- **GIVEN** a user has navigated to `/analyze/[id]` with a valid analysis ID\n- **WHEN** the page loads\n- **THEN** the analysis results are displayed in a tabbed interface with sections for Design Patterns, Feature List, UI Patterns, and User Flow Summary\n\n### Tab Navigation\n- **GIVEN** the analysis results page is loaded\n- **WHEN** the user clicks on a tab (e.g., \"Features\")\n- **THEN** the corresponding section content is displayed without page reload\n\n### Export Functionality\n- **GIVEN** the analysis results are displayed\n- **WHEN** the user clicks \"Export as Markdown\"\n- **THEN** a markdown file is downloaded containing all analysis data\n\n### Save to Supabase\n- **GIVEN** the analysis results are displayed\n- **WHEN** the user clicks \"Save to Supabase\"\n- **THEN** the analysis is persisted to the database with a success notification\n\n### Loading State\n- **GIVEN** the analysis data is being fetched\n- **WHEN** the page is loading\n- **THEN** skeleton loaders are displayed for all content sections\n\n### Error Handling\n- **GIVEN** the analysis fetch fails or the ID is invalid\n- **WHEN** the page attempts to load\n- **THEN** an error message with a retry button is displayed\n\n### Edge Cases\n- **GIVEN** an analysis has no data for a specific section (e.g., no differentiators)\n- **WHEN** that section is viewed\n- **THEN** an appropriate empty state message is displayed\n\n## 4. Technical Context\n\n| Aspect | Value |\n|--------|-------|\n| Affected Files | `app/analyze/[id]/page.tsx` (new), `components/AnalysisResults.tsx` (new) |\n| Dependencies | `@radix-ui/react-tabs`, `lucide-react`, existing UI components (Card, Badge, Skeleton, Button, Alert, Tabs) |\n| Constraints | Must follow existing Next.js 16 App Router patterns, use existing Supabase db utilities |\n| Patterns to Follow | Result pattern for API calls, existing UI component patterns from `components/ui/*`, TypeScript strict mode |\n\n## 5. Non-Goals\n\n- **Real-time analysis progress tracking** - This feature displays completed results only\n- **Editing analysis results** - Read-only display of analysis data\n- **Comparison view on this page** - Comparison functionality exists on `/compare`\n- **Authentication/Authorization** - No auth gates for this release\n- **PDF export** - Only markdown export for MVP\n\n## 6. Implementation Tasks\n\n```tasks\n## Phase 1: Foundation\n- [ ] T001: Create AnalysisResults.tsx component with type definitions for props | File: components/AnalysisResults.tsx\n- [ ] T002: Create DesignPatternsSection sub-component with color swatches and typography display | File: components/AnalysisResults.tsx\n- [ ] T003: Create FeatureListSection sub-component with categorized badges (core, nice-to-have, differentiators) | File: components/AnalysisResults.tsx\n- [ ] T004: Create UIPatternsSection sub-component with pattern cards | File: components/AnalysisResults.tsx\n- [ ] T005: Create UserFlowSection sub-component with flow summary cards | File: components/AnalysisResults.tsx\n\n## Phase 2: Core Implementation\n- [ ] T006: Create app/analyze/[id]/page.tsx with dynamic route setup | File: app/analyze/[id]/page.tsx\n- [ ] T007: Implement data fetching using referenceApps.getById from Supabase db utilities | File: app/analyze/[id]/page.tsx\n- [ ] T008: Integrate tabbed interface using existing Tabs components | File: components/AnalysisResults.tsx\n- [ ] T009: Implement loading state with skeleton loaders for all sections | File: components/AnalysisResults.tsx\n- [ ] T010: Implement error state with retry button using Alert component | File: components/AnalysisResults.tsx\n\n## Phase 3: Integration & Export Features\n- [ ] T011: Implement \"Export as Markdown\" functionality with file download | File: components/AnalysisResults.tsx\n- [ ] T012: Implement \"Save to Supabase\" button with referenceApps.update integration | File: components/AnalysisResults.tsx\n- [ ] T013: Add success/error toast notifications for save operations | File: components/AnalysisResults.tsx\n- [ ] T014: Final styling polish - ensure clean hierarchy with cards, badges, and spacing | File: components/AnalysisResults.tsx\n```\n\n## 7. Success Metrics\n\n| Metric | Criteria |\n|--------|----------|\n| Page loads successfully | Analysis page renders without errors for valid IDs |\n| All tabs are functional | User can switch between all 4 tabs without issues |\n| Export works | Markdown file downloads with correct formatted content |\n| Save works | Analysis persists to Supabase and displays success message |\n| Loading states | Skeleton loaders appear during data fetch |\n| Error handling | Error message and retry button shown for failed fetches |\n| Responsive design | Page is usable on mobile and desktop viewports |\n\n## 8. Risks & Mitigations\n\n| Risk | Mitigation |\n|------|------------|\n| Large analysis data may slow rendering | Implement lazy loading for tab content, only render active tab |\n| Invalid analysis ID could cause errors | Validate ID format and handle NOT_FOUND gracefully |\n| Supabase connection issues | Use existing Result pattern error handling with user-friendly messages |\n| Missing analysis data fields | Add null checks and empty state handling for all optional fields |\n| Markdown export with special characters | Escape markdown special characters during export generation |\n\n---",
+    "generatedAt": "2026-01-10T23:42:08.456Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Create AnalysisResults.tsx component with type definitions for props",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 1: Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Create DesignPatternsSection sub-component with color swatches and typography display",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 1: Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Create FeatureListSection sub-component with categorized badges (core, nice-to-have, differentiators)",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 1: Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Create UIPatternsSection sub-component with pattern cards",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 1: Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Create UserFlowSection sub-component with flow summary cards",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 1: Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Create app/analyze/[id]/page.tsx with dynamic route setup",
+        "filePath": "app/analyze/[id]/page.tsx",
+        "phase": "Phase 2: Core Implementation",
+        "status": "pending"
+      },
+      {
+        "id": "T007",
+        "description": "Implement data fetching using referenceApps.getById from Supabase db utilities",
+        "filePath": "app/analyze/[id]/page.tsx",
+        "phase": "Phase 2: Core Implementation",
+        "status": "pending"
+      },
+      {
+        "id": "T008",
+        "description": "Integrate tabbed interface using existing Tabs components",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 2: Core Implementation",
+        "status": "pending"
+      },
+      {
+        "id": "T009",
+        "description": "Implement loading state with skeleton loaders for all sections",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 2: Core Implementation",
+        "status": "pending"
+      },
+      {
+        "id": "T010",
+        "description": "Implement error state with retry button using Alert component",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 2: Core Implementation",
+        "status": "pending"
+      },
+      {
+        "id": "T011",
+        "description": "Implement \"Export as Markdown\" functionality with file download",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 3: Integration & Export Features",
+        "status": "pending"
+      },
+      {
+        "id": "T012",
+        "description": "Implement \"Save to Supabase\" button with referenceApps.update integration",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 3: Integration & Export Features",
+        "status": "pending"
+      },
+      {
+        "id": "T013",
+        "description": "Add success/error toast notifications for save operations",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 3: Integration & Export Features",
+        "status": "pending"
+      },
+      {
+        "id": "T014",
+        "description": "Final styling polish - ensure clean hierarchy with cards, badges, and spacing",
+        "filePath": "components/AnalysisResults.tsx",
+        "phase": "Phase 3: Integration & Export Features",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 14,
+    "tasksCompleted": 14,
+    "approvedAt": "2026-01-10T23:42:08.473Z",
+    "currentTaskId": "T014"
+  },
+  "justFinishedAt": "2026-01-11T00:11:56.146Z"
+}

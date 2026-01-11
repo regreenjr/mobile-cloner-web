@@ -1,0 +1,128 @@
+{
+  "category": "Uncategorized",
+  "description": "UI and API for searching app stores and fetching screenshots.\n\nAcceptance Criteria:\n- Create app/api/app-store/route.ts API endpoint\n- Adapt existing lib/appStoreApi.ts and lib/appStoreService.ts for Next.js\n- Create components/AppSearchInput.tsx:\n  - Search input with debounce\n  - Dropdown showing search results (app icon, name, developer)\n  - Select app to fetch screenshots\n- Create components/ScreenshotGallery.tsx:\n  - Grid display of fetched screenshots\n  - Loading skeletons while fetching\n  - Click to enlarge (dialog)\n- Support both iOS App Store and Google Play Store\n- Cache search results to reduce API calls\n- Handle errors: app not found, rate limits, network issues\n\nThe API route handles external calls to avoid CORS issues in browser.",
+  "title": "App Search & Screenshot Fetcher",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 1,
+  "planningMode": "full",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768084965380-h5c8tompc",
+  "descriptionHistory": [
+    {
+      "description": "UI and API for searching app stores and fetching screenshots.\n\nAcceptance Criteria:\n- Create app/api/app-store/route.ts API endpoint\n- Adapt existing lib/appStoreApi.ts and lib/appStoreService.ts for Next.js\n- Create components/AppSearchInput.tsx:\n  - Search input with debounce\n  - Dropdown showing search results (app icon, name, developer)\n  - Select app to fetch screenshots\n- Create components/ScreenshotGallery.tsx:\n  - Grid display of fetched screenshots\n  - Loading skeletons while fetching\n  - Click to enlarge (dialog)\n- Support both iOS App Store and Google Play Store\n- Cache search results to reduce API calls\n- Handle errors: app not found, rate limits, network issues\n\nThe API route handles external calls to avoid CORS issues in browser.",
+      "timestamp": "2026-01-10T22:42:45.489Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T23:03:53.923Z",
+  "updatedAt": "2026-01-10T23:40:04.257Z",
+  "planSpec": {
+    "status": "approved",
+    "version": 1,
+    "reviewedByUser": false,
+    "content": "🔧 Tool: Task\nInput: {\n  \"description\": \"Explore codebase structure\",\n  \"prompt\": \"Explore the codebase to understand its structure for implementing an app store search and screenshot fetching feature. I need to understand:\\n\\n1. The project structure (Next.js app router vs pages router)\\n2. Existing API route patterns in app/api/\\n3. Existing component patterns and styling (Tailwind, shadcn/ui, etc.)\\n4. Check if lib/appStoreApi.ts and lib/appStoreService.ts already exist\\n5. Any existing UI components for inputs, dropdowns, dialogs, galleries\\n6. State management patterns used\\n7. Error handling patterns\\n8. Caching patterns if any\\n\\nPlease provide a comprehensive summary of the codebase structure and patterns I should follow.\",\n  \"subagent_type\": \"Explore\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"find /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web -type f -name \\\"*.json\\\" | grep -E \\\"(package|tsconfig|next)\\\" | head -20\",\n  \"description\": \"Find configuration files to understand project setup\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"app/**/*.ts*\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"components/**/*.ts*\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"lib/**/*.ts*\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/package.json\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/tsconfig.json\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/next.config.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/layout.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/appStoreApi.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/appStoreService.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"app/api/**/*.ts\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/page.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/button.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/input.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/card.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/utils.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/analysisCache.ts\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"types/**/*.ts\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/appStore.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/types/analyze.ts\",\n  \"limit\": 100\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"find /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app -type f -name \\\"*.tsx\\\" | head -10\",\n  \"description\": \"Find all page components in app directory\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/analyze/page.tsx\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"ls -la /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ | head -20\",\n  \"description\": \"List component structure\"\n}\n\n🔧 Tool: Glob\nInput: {\n  \"pattern\": \"components/**/*.tsx\",\n  \"path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/header.tsx\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components/ui/dialog.tsx\",\n  \"limit\": 50\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"ls -la /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/\",\n  \"description\": \"List all lib files to see utilities\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/apiConfig.ts\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/imageUtils.ts\",\n  \"limit\": 80\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"find /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web -type f -name \\\"*.css\\\" | head -5\",\n  \"description\": \"Find CSS files to understand styling\"\n}\n\n🔧 Tool: Read\nInput: {\n  \"file_path\": \"/Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/app/globals.css\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"cat /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/playStoreApi.ts | head -150\",\n  \"description\": \"Check first 150 lines of playStoreApi for API pattern\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"head -30 /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/components.json\",\n  \"description\": \"Check components.json for shadcn config\"\n}\n\n🔧 Tool: Bash\nInput: {\n  \"command\": \"grep -E \\\"export|import\\\" /Users/robbgreenpro/Documents/Automaker/mobile-cloner-web/lib/claude.ts | head -30\",\n  \"description\": \"Check Claude API integration patterns\"\n}\n# Comprehensive Specification: UI and API for App Store Search and Screenshot Fetching\n\n---\n\n## 1. Problem Statement\n\nUsers need the ability to search both iOS App Store and Google Play Store to find mobile applications and retrieve their screenshots. Currently, while the backend app store services exist (`lib/appStoreApi.ts` and `lib/appStoreService.ts`), there is no API route to handle browser requests (avoiding CORS issues) and no UI components to enable searching and viewing screenshots in a user-friendly interface.\n\n---\n\n## 2. User Story\n\n**As a** mobile app designer/developer,\n**I want** to search app stores and view app screenshots in a gallery format,\n**So that** I can reference existing app designs for inspiration or analysis without leaving the application.\n\n---\n\n## 3. Acceptance Criteria\n\n### Happy Path\n- **GIVEN** the user is on a page with the AppSearchInput component, **WHEN** they type a search query and wait for debounce, **THEN** a dropdown displays matching apps with icons, names, and developer names from both platforms.\n- **GIVEN** the user sees search results, **WHEN** they click on an app, **THEN** the ScreenshotGallery displays all screenshots for that app with loading skeletons during fetch.\n- **GIVEN** screenshots are displayed in the gallery, **WHEN** the user clicks on a screenshot, **THEN** an enlarged view opens in a dialog.\n\n### Edge Cases\n- **GIVEN** the user searches for a non-existent app, **WHEN** results are empty, **THEN** a \"No apps found\" message is displayed.\n- **GIVEN** the user types a very short query (< 2 chars), **WHEN** they stop typing, **THEN** no search is triggered and a hint is shown.\n- **GIVEN** the user rapidly types, **WHEN** multiple keystrokes occur, **THEN** only the final debounced query triggers an API call.\n\n### Error Handling\n- **GIVEN** a network error occurs, **WHEN** the API call fails, **THEN** an error message with retry option is displayed.\n- **GIVEN** rate limiting is triggered, **WHEN** the API returns 429, **THEN** a \"Please wait and try again\" message is shown with retry delay.\n- **GIVEN** the API is unavailable, **WHEN** the request times out, **THEN** a graceful error message is displayed.\n\n---\n\n## 4. Technical Context\n\n| Aspect | Value |\n|--------|-------|\n| **Affected Files** | `app/api/app-store/route.ts` (new), `components/AppSearchInput.tsx` (new), `components/ScreenshotGallery.tsx` (new), `lib/appStoreService.ts` (existing), `lib/appStoreApi.ts` (existing), `types/appStore.ts` (existing) |\n| **Dependencies** | `lucide-react` (icons), `@radix-ui/react-dialog` (dialog), existing shadcn/ui components (`input`, `card`, `dialog`, `skeleton`) |\n| **Constraints** | iTunes API is CORS-friendly; Play Store scraping requires server-side proxy; debounce minimum 300ms; rate limits (100ms iOS, 200ms Android) |\n| **Patterns to Follow** | `Result<T, E>` pattern for errors, shadcn/ui component patterns, `\"use client\"` for interactive components, `cn()` for className merging, existing caching via `analysisCache.ts` |\n\n---\n\n## 5. Non-Goals\n\n- **NOT** implementing app download or installation functionality\n- **NOT** adding authentication or user sessions for search history\n- **NOT** providing screenshot editing or annotation features\n- **NOT** supporting deep linking to specific app store pages (just viewing within the app)\n- **NOT** implementing persistent server-side caching (using in-memory caching only for MVP)\n- **NOT** adding analytics or tracking for search queries\n\n---\n\n## 6. Implementation Tasks\n\n```tasks\n## Phase 1: API Foundation\n- [ ] T001: Create API route structure with POST handler for unified search | File: app/api/app-store/route.ts\n- [ ] T002: Add GET handler for fetching app details and screenshots by ID | File: app/api/app-store/route.ts\n- [ ] T003: Implement in-memory caching layer for search results | File: lib/searchCache.ts\n\n## Phase 2: Core UI Components\n- [ ] T004: Create AppSearchInput component with debounced input | File: components/AppSearchInput.tsx\n- [ ] T005: Build search results dropdown with app cards (icon, name, developer) | File: components/AppSearchInput.tsx\n- [ ] T006: Create ScreenshotGallery component with grid layout | File: components/ScreenshotGallery.tsx\n- [ ] T007: Add loading skeleton states to ScreenshotGallery | File: components/ScreenshotGallery.tsx\n- [ ] T008: Implement screenshot enlargement dialog on click | File: components/ScreenshotGallery.tsx\n\n## Phase 3: Integration & Error Handling\n- [ ] T009: Wire AppSearchInput to API route with error handling | File: components/AppSearchInput.tsx\n- [ ] T010: Add platform toggle (iOS/Android/Both) to search input | File: components/AppSearchInput.tsx\n- [ ] T011: Implement error states and retry functionality | File: components/AppSearchInput.tsx\n- [ ] T012: Create demo page integrating both components | File: app/app-search/page.tsx\n```\n\n---\n\n## 7. Success Metrics\n\n| Metric | Target |\n|--------|--------|\n| Search response time | < 2 seconds for initial results |\n| Cached search response | < 100ms for cached queries |\n| Screenshot gallery load | All thumbnails visible within 3 seconds |\n| Error recovery | User can retry failed requests in one click |\n| Browser compatibility | Works in Chrome, Firefox, Safari (latest versions) |\n| Mobile responsiveness | Gallery displays correctly on viewport >= 320px |\n\n---\n\n## 8. Risks & Mitigations\n\n| Risk | Mitigation |\n|------|------------|\n| Play Store scraping instability | Graceful degradation to iOS-only results; clear error messaging |\n| Rate limiting from stores | Implement request throttling; cache aggressively; show retry-after delays |\n| Large screenshot payloads | Lazy load images; use thumbnail URLs initially; only load full-size on click |\n| CORS issues with external images | Proxy screenshot URLs through API route if needed; use `next/image` with remotePatterns |\n| API response time | Add timeout handling (5s); show partial results immediately |\n\n---",
+    "generatedAt": "2026-01-10T23:05:54.168Z",
+    "tasks": [
+      {
+        "id": "T001",
+        "description": "Create API route structure with POST handler for unified search",
+        "filePath": "app/api/app-store/route.ts",
+        "phase": "Phase 1: API Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T002",
+        "description": "Add GET handler for fetching app details and screenshots by ID",
+        "filePath": "app/api/app-store/route.ts",
+        "phase": "Phase 1: API Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T003",
+        "description": "Implement in-memory caching layer for search results",
+        "filePath": "lib/searchCache.ts",
+        "phase": "Phase 1: API Foundation",
+        "status": "pending"
+      },
+      {
+        "id": "T004",
+        "description": "Create AppSearchInput component with debounced input",
+        "filePath": "components/AppSearchInput.tsx",
+        "phase": "Phase 2: Core UI Components",
+        "status": "pending"
+      },
+      {
+        "id": "T005",
+        "description": "Build search results dropdown with app cards (icon, name, developer)",
+        "filePath": "components/AppSearchInput.tsx",
+        "phase": "Phase 2: Core UI Components",
+        "status": "pending"
+      },
+      {
+        "id": "T006",
+        "description": "Create ScreenshotGallery component with grid layout",
+        "filePath": "components/ScreenshotGallery.tsx",
+        "phase": "Phase 2: Core UI Components",
+        "status": "pending"
+      },
+      {
+        "id": "T007",
+        "description": "Add loading skeleton states to ScreenshotGallery",
+        "filePath": "components/ScreenshotGallery.tsx",
+        "phase": "Phase 2: Core UI Components",
+        "status": "pending"
+      },
+      {
+        "id": "T008",
+        "description": "Implement screenshot enlargement dialog on click",
+        "filePath": "components/ScreenshotGallery.tsx",
+        "phase": "Phase 2: Core UI Components",
+        "status": "pending"
+      },
+      {
+        "id": "T009",
+        "description": "Wire AppSearchInput to API route with error handling",
+        "filePath": "components/AppSearchInput.tsx",
+        "phase": "Phase 3: Integration & Error Handling",
+        "status": "pending"
+      },
+      {
+        "id": "T010",
+        "description": "Add platform toggle (iOS/Android/Both) to search input",
+        "filePath": "components/AppSearchInput.tsx",
+        "phase": "Phase 3: Integration & Error Handling",
+        "status": "pending"
+      },
+      {
+        "id": "T011",
+        "description": "Implement error states and retry functionality",
+        "filePath": "components/AppSearchInput.tsx",
+        "phase": "Phase 3: Integration & Error Handling",
+        "status": "pending"
+      },
+      {
+        "id": "T012",
+        "description": "Create demo page integrating both components",
+        "filePath": "app/app-search/page.tsx",
+        "phase": "Phase 3: Integration & Error Handling",
+        "status": "pending"
+      }
+    ],
+    "tasksTotal": 12,
+    "tasksCompleted": 12,
+    "approvedAt": "2026-01-10T23:05:54.178Z",
+    "currentTaskId": "T012"
+  },
+  "justFinishedAt": "2026-01-10T23:40:04.257Z"
+}

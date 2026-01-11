@@ -1,0 +1,31 @@
+{
+  "category": "Uncategorized",
+  "description": "Connect the UI to Claude API for screenshot analysis.\n\nAcceptance Criteria:\n- Create app/api/analyze/route.ts API endpoint\n- Adapt existing lib/claude.ts for Next.js:\n  - Remove React Native specific imports\n  - Use Next.js server environment\n  - Keep retry logic, caching, error handling\n- API route accepts screenshots (URLs or base64)\n- Sends to Claude with analysis prompt\n- Returns structured JSON response\n- Store results in Supabase reference_apps.analysis\n- Progress callback for long-running analysis\n- Handle rate limits and errors gracefully\n\nIMPORTANT: ANTHROPIC_API_KEY must be server-side only (no NEXT_PUBLIC_ prefix)",
+  "title": "Claude Analysis Integration",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 1,
+  "planningMode": "full",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768085031163-xp2wmk59c",
+  "descriptionHistory": [
+    {
+      "description": "Connect the UI to Claude API for screenshot analysis.\n\nAcceptance Criteria:\n- Create app/api/analyze/route.ts API endpoint\n- Adapt existing lib/claude.ts for Next.js:\n  - Remove React Native specific imports\n  - Use Next.js server environment\n  - Keep retry logic, caching, error handling\n- API route accepts screenshots (URLs or base64)\n- Sends to Claude with analysis prompt\n- Returns structured JSON response\n- Store results in Supabase reference_apps.analysis\n- Progress callback for long-running analysis\n- Handle rate limits and errors gracefully\n\nIMPORTANT: ANTHROPIC_API_KEY must be server-side only (no NEXT_PUBLIC_ prefix)",
+      "timestamp": "2026-01-10T22:43:51.349Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-10T23:42:02.991Z",
+  "updatedAt": "2026-01-10T23:48:21.949Z",
+  "justFinishedAt": "2026-01-10T23:48:21.949Z"
+}
