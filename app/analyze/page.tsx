@@ -173,7 +173,7 @@ const steps = [
   },
   {
     title: "AI Analysis",
-    description: "Claude examines screenshots to extract design elements.",
+    description: "Gemini examines screenshots to extract design elements.",
     icon: Sparkles,
   },
   {
@@ -379,7 +379,7 @@ export default function AnalyzePage() {
           Analyze Mobile App
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Search for any app and let Claude AI extract colors, typography, spacing,
+          Search for any app and let Gemini AI extract colors, typography, spacing,
           and component patterns from screenshots.
         </p>
       </section>
