@@ -68,12 +68,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const result = await referenceApps.create(appData);
 
     if (!result.success) {
+      const error = result.error;
       return NextResponse.json(
         {
           success: false,
           error: {
-            code: result.error.code,
-            message: result.error.message,
+            code: error.code,
+            message: error.message,
           },
         },
         { status: 500 }
@@ -113,12 +114,13 @@ export async function GET(): Promise<NextResponse> {
     const result = await referenceApps.getAll();
 
     if (!result.success) {
+      const error = result.error;
       return NextResponse.json(
         {
           success: false,
           error: {
-            code: result.error.code,
-            message: result.error.message,
+            code: error.code,
+            message: error.message,
           },
         },
         { status: 500 }
