@@ -277,34 +277,60 @@ export default function AnalyzePage() {
     setAnalysisError(null)
 
     try {
-      const response = await fetch('/api/analyze', {
+      // Step 1: Create reference app in database to get UUID
+      const createAppResponse = await fetch('/api/reference-apps', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          app: {
-            name: selectedApp.name,
-            developer: selectedApp.developer,
-            category: selectedApp.category,
-            platform: selectedApp.platform,
-            storeUrl: selectedApp.storeUrl,
-          },
-          screenshots: selectedScreenshots.map((s) => ({
+          name: selectedApp.name,
+          category: selectedApp.category || 'Apps',
+          app_store_url: selectedApp.platform === 'ios' ? selectedApp.storeUrl : null,
+          play_store_url: selectedApp.platform === 'android' ? selectedApp.storeUrl : null,
+          screenshots: selectedScreenshots.map((s, index) => ({
+            id: s.id,
             url: s.url,
             platform: s.platform,
             deviceType: s.deviceType,
+            order: index,
           })),
         }),
       })
 
-      const data = await response.json()
+      const appData = await createAppResponse.json()
 
-      if (data.success && data.analysisId) {
+      if (!appData.success || !appData.data?.id) {
+        setAnalysisError(appData.error?.message || "Failed to create reference app.")
+        return
+      }
+
+      const appId = appData.data.id
+
+      // Step 2: Analyze screenshots with Claude using the app UUID
+      const analyzeResponse = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          appId: appId,
+          appName: selectedApp.name,
+          screenshots: selectedScreenshots.map((s, index) => ({
+            id: s.id,
+            url: s.url,
+            order: index,
+          })),
+        }),
+      })
+
+      const analyzeData = await analyzeResponse.json()
+
+      if (analyzeData.success) {
         // Redirect to analysis results page
-        router.push(`/analyze/${data.analysisId}`)
+        router.push(`/analyze/${appId}`)
       } else {
-        setAnalysisError(data.error?.message || "Analysis failed. Please try again.")
+        setAnalysisError(analyzeData.error?.message || "Analysis failed. Please try again.")
       }
     } catch (error) {
       console.error("Error analyzing app:", error)
