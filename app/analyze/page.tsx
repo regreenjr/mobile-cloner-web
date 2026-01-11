@@ -154,8 +154,8 @@ function FeatureInfo() {
     <Alert className="mb-6">
       <Info className="h-4 w-4" />
       <AlertDescription>
-        Search for any mobile app, select up to 6 screenshots to analyze, and let Claude AI extract design patterns,
-        colors, typography, spacing, and component styles.
+        Search for any mobile app, select screenshots to analyze (up to 50), and let Gemini AI extract design patterns,
+        colors, typography, spacing, and component styles. Powered by Google Gemini 2.0 Flash.
       </AlertDescription>
     </Alert>
   )
@@ -187,16 +187,16 @@ const steps = [
 // Constants
 // ============================================================================
 
-/** Maximum number of screenshots that can be analyzed at once (API size limit) */
-const MAX_SCREENSHOTS = 6
+/** Maximum number of screenshots that can be analyzed at once (Gemini limit) */
+const MAX_SCREENSHOTS = 50
 
 /**
- * AnalyzePage - Search for apps and analyze their design with Claude AI
+ * AnalyzePage - Search for apps and analyze their design with Gemini AI
  *
  * Features:
  * - App search across iOS and Android stores
- * - Screenshot selection
- * - Claude AI analysis of design patterns
+ * - Screenshot selection (up to 50 screenshots)
+ * - Gemini 2.0 Flash AI analysis of design patterns
  * - Results saved to database
  */
 export default function AnalyzePage() {

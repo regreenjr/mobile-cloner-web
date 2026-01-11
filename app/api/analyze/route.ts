@@ -1,10 +1,10 @@
 /**
  * Screenshot Analysis API Route
  *
- * Provides a server-side API endpoint for analyzing app screenshots using Claude AI.
+ * Provides a server-side API endpoint for analyzing app screenshots using Gemini AI.
  * This route handles the complete analysis workflow including:
  * - Screenshot validation and fetching
- * - Claude API integration with vision capabilities
+ * - Gemini 2.0 Flash API integration with vision capabilities
  * - Progress tracking via Server-Sent Events (SSE)
  * - Result caching and storage in Supabase
  * - Rate limit handling and error management
@@ -45,7 +45,7 @@ import {
   getRateLimitStatus,
   getMaxScreenshotsPerRequest,
   type CacheStatus,
-} from '@/lib/claude';
+} from '@/lib/gemini';
 import { referenceApps } from '@/lib/supabase/db';
 import type { Screenshot, AppAnalysis, ClaudeApiError } from '@/types/analyze';
 
