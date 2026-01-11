@@ -432,7 +432,7 @@ export default function AnalyzePage() {
                     gap="md"
                     aspectRatio="auto"
                     showPlatformBadge
-                    enableSelection
+                    selectable
                     onScreenshotClick={handleScreenshotToggle}
                     emptyMessage={
                       isLoadingScreenshots
