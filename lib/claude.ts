@@ -1242,7 +1242,18 @@ async function fetchImageAsBase64(
     }
 
     const buffer = await blob.arrayBuffer();
-    const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+    // Convert ArrayBuffer to base64 in chunks to avoid stack overflow with large images
+    const uint8Array = new Uint8Array(buffer);
+    const chunkSize = 8192; // Process 8KB at a time
+    let binaryString = '';
+
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.slice(i, i + chunkSize);
+      binaryString += String.fromCharCode.apply(null, Array.from(chunk));
+    }
+
+    const base64 = btoa(binaryString);
 
     // Determine media type from content-type header or URL
     let mediaType: ImageFetchResult['mediaType'] = 'image/png';
