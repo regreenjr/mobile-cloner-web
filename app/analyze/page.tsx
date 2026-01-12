@@ -187,7 +187,7 @@ const steps = [
 // Constants
 // ============================================================================
 
-/** Maximum number of screenshots that can be analyzed at once (Gemini limit) */
+/** Maximum number of screenshots that can be analyzed at once (Gemini 2.0 Flash limit) */
 const MAX_SCREENSHOTS = 50
 
 /**
