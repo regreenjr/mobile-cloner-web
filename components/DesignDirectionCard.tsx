@@ -377,7 +377,8 @@ export function ComponentPreview({
 }
 
 /**
- * DesignMockupPreview - Shows a full phone mockup rendering of the design
+ * DesignMockupPreview - High-fidelity iPhone mockup showing design direction applied
+ * Renders different screen types based on direction number for variety
  */
 export function DesignMockupPreview({
   direction,
@@ -386,224 +387,651 @@ export function DesignMockupPreview({
   direction: DesignDirection
   className?: string
 }) {
-  const { colorPalette, typography, componentPatterns, name } = direction
+  const { colorPalette, typography, componentPatterns, name, directionNumber, moodKeywords } = direction
+
+  // Determine screen type based on direction number
+  const screenType = ['onboarding', 'home', 'selection', 'action'][directionNumber % 4] as 'onboarding' | 'home' | 'selection' | 'action'
+
+  // Get key colors for palette strip
+  const keyColors = [
+    { name: 'Primary', color: colorPalette.primary },
+    { name: 'Accent', color: colorPalette.accent },
+    { name: 'Background', color: colorPalette.background },
+    { name: 'Surface', color: colorPalette.surface },
+    { name: 'Text', color: colorPalette.text },
+    { name: 'Success', color: colorPalette.success },
+  ].filter(c => c.color) // Remove undefined colors
 
   return (
-    <div className={cn("space-y-3", className)}>
-      <div className="flex items-center gap-2">
-        <Smartphone className="h-4 w-4 text-muted-foreground" />
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-          Preview
-        </span>
+    <div className={cn("space-y-4", className)}>
+      {/* Direction Label */}
+      <div className="text-center space-y-1">
+        <div className="flex items-center justify-center gap-2">
+          <Smartphone className="h-4 w-4 text-muted-foreground" />
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            {name} Preview
+          </span>
+        </div>
+        {moodKeywords.length > 0 && (
+          <p className="text-xs text-muted-foreground italic">
+            "{moodKeywords[0]}"
+          </p>
+        )}
       </div>
 
-      {/* Phone frame */}
-      <div className="relative mx-auto max-w-sm">
-        {/* Phone mockup container */}
-        <div
-          className="relative rounded-[2rem] border-[14px] border-gray-800 shadow-2xl overflow-hidden"
-          style={{ aspectRatio: '9/19.5' }}
-        >
-          {/* Screen content */}
-          <div
-            className="h-full w-full overflow-y-auto"
-            style={{ backgroundColor: colorPalette.background }}
-          >
-            {/* Status bar */}
-            <div
-              className="flex items-center justify-between px-6 py-3"
-              style={{ backgroundColor: colorPalette.surface || colorPalette.background }}
-            >
-              <div className="text-xs font-semibold" style={{ color: colorPalette.text }}>
-                9:41
-              </div>
-              <div className="flex gap-1">
-                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.primary }} />
-                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.secondary }} />
-                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.accent }} />
-              </div>
+      {/* iPhone Mockup */}
+      <div className="relative mx-auto" style={{ width: '280px' }}>
+        {/* iPhone Frame with shadow and depth */}
+        <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl">
+          {/* Inner bezel */}
+          <div className="relative rounded-[2.5rem] overflow-hidden bg-black">
+            {/* Dynamic Island / Notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-8 bg-black rounded-b-3xl z-20 flex items-end justify-center pb-1">
+              <div className="w-14 h-1 bg-gray-800 rounded-full" />
             </div>
 
-            {/* Main content area */}
-            <div className="p-6 space-y-5">
-              {/* Header */}
-              <div className="space-y-2">
-                <h1
-                  className="text-2xl font-bold"
-                  style={{
-                    fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
-                    color: colorPalette.text,
-                    fontWeight: typography.fontWeight.bold,
-                  }}
-                >
-                  {name}
-                </h1>
-                <p
-                  className="text-sm"
-                  style={{
-                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                    color: colorPalette.textSecondary,
-                  }}
-                >
-                  Design preview in action
-                </p>
+            {/* Screen Content */}
+            <div
+              className="relative w-full overflow-hidden"
+              style={{
+                aspectRatio: '9/19.5',
+                backgroundColor: colorPalette.background
+              }}
+            >
+              {/* Status Bar */}
+              <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 pt-3 pb-2 z-10">
+                <div className="text-[10px] font-semibold" style={{ color: colorPalette.text }}>
+                  9:41
+                </div>
+                <div className="flex items-center gap-1">
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke={colorPalette.text} strokeWidth="2">
+                    <rect x="1" y="5" width="22" height="14" rx="2" />
+                    <path d="M23 13v-2" />
+                  </svg>
+                </div>
               </div>
 
-              {/* Featured Card */}
-              <div
-                className="p-5 space-y-3"
-                style={{
-                  backgroundColor: colorPalette.surface || colorPalette.background,
-                  borderRadius: `${componentPatterns.cards.borderRadius}px`,
-                  border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border || colorPalette.borderLight}` : 'none',
-                  boxShadow: componentPatterns.cards.hasShadow
-                    ? componentPatterns.cards.shadowIntensity === 'strong'
-                      ? '0 10px 25px -5px rgb(0 0 0 / 0.1)'
-                      : componentPatterns.cards.shadowIntensity === 'medium'
-                      ? '0 4px 10px -2px rgb(0 0 0 / 0.08)'
-                      : '0 2px 4px -1px rgb(0 0 0 / 0.05)'
-                    : 'none',
-                }}
-              >
-                <div
-                  className="h-32 w-full rounded-lg"
-                  style={{
-                    background: `linear-gradient(135deg, ${colorPalette.primary}, ${colorPalette.accent})`,
-                  }}
-                />
-                <h3
-                  className="text-base font-semibold"
-                  style={{
-                    fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
-                    color: colorPalette.text,
-                    fontWeight: typography.fontWeight.semibold,
-                  }}
-                >
-                  Featured Content
-                </h3>
-                <p
-                  className="text-sm"
-                  style={{
-                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                    color: colorPalette.textSecondary,
-                  }}
-                >
-                  This is how content cards appear in the design system
-                </p>
-              </div>
-
-              {/* Buttons Row */}
-              <div className="flex gap-3">
-                {/* Primary Button */}
-                <button
-                  className="flex-1 py-3 px-4 text-sm font-semibold transition-transform active:scale-95"
-                  style={{
-                    backgroundColor: colorPalette.primary,
-                    color: colorPalette.background,
-                    borderRadius: `${componentPatterns.buttons.borderRadius}px`,
-                    boxShadow: componentPatterns.buttons.hasShadow ? '0 2px 4px 0 rgb(0 0 0 / 0.1)' : 'none',
-                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                  }}
-                >
-                  Primary
-                </button>
-
-                {/* Secondary Button */}
-                {componentPatterns.buttons.variants.includes('outline') && (
-                  <button
-                    className="flex-1 py-3 px-4 text-sm font-semibold border-2 transition-transform active:scale-95"
-                    style={{
-                      borderColor: colorPalette.primary,
-                      color: colorPalette.primary,
-                      backgroundColor: 'transparent',
-                      borderRadius: `${componentPatterns.buttons.borderRadius}px`,
-                      fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                    }}
-                  >
-                    Secondary
-                  </button>
+              {/* Screen Content Based on Type */}
+              <div className="pt-12 pb-8 px-6 h-full flex flex-col">
+                {screenType === 'onboarding' && (
+                  <OnboardingScreen
+                    colorPalette={colorPalette}
+                    typography={typography}
+                    componentPatterns={componentPatterns}
+                    name={name}
+                  />
+                )}
+                {screenType === 'home' && (
+                  <HomeScreen
+                    colorPalette={colorPalette}
+                    typography={typography}
+                    componentPatterns={componentPatterns}
+                  />
+                )}
+                {screenType === 'selection' && (
+                  <SelectionScreen
+                    colorPalette={colorPalette}
+                    typography={typography}
+                    componentPatterns={componentPatterns}
+                  />
+                )}
+                {screenType === 'action' && (
+                  <ActionScreen
+                    colorPalette={colorPalette}
+                    typography={typography}
+                    componentPatterns={componentPatterns}
+                  />
                 )}
               </div>
 
-              {/* List Items */}
-              <div className="space-y-3">
-                {[1, 2, 3].map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 p-4"
-                    style={{
-                      backgroundColor: colorPalette.surface || colorPalette.background,
-                      borderRadius: `${componentPatterns.cards.borderRadius}px`,
-                      border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border || colorPalette.borderLight}` : 'none',
-                    }}
-                  >
-                    <div
-                      className="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold"
-                      style={{ backgroundColor: colorPalette.accent }}
-                    >
-                      {item}
-                    </div>
-                    <div className="flex-1">
-                      <div
-                        className="text-sm font-medium"
-                        style={{
-                          fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
-                          color: colorPalette.text,
-                        }}
-                      >
-                        List Item {item}
-                      </div>
-                      <div
-                        className="text-xs"
-                        style={{
-                          fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                          color: colorPalette.textSecondary,
-                        }}
-                      >
-                        Subtitle text here
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Input Field Example */}
-              <div className="space-y-2">
-                <label
-                  className="text-sm font-medium"
-                  style={{
-                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                    color: colorPalette.text,
-                  }}
-                >
-                  Input Field
-                </label>
-                <div
-                  className="px-4 py-3 text-sm"
-                  style={{
-                    backgroundColor: colorPalette.surface || colorPalette.background,
-                    borderRadius: `${componentPatterns.inputs.borderRadius}px`,
-                    border: componentPatterns.inputs.borderStyle === 'solid'
-                      ? `1px solid ${colorPalette.border || colorPalette.borderLight}`
-                      : componentPatterns.inputs.borderStyle === 'underline'
-                      ? 'none'
-                      : 'none',
-                    borderBottom: componentPatterns.inputs.borderStyle === 'underline'
-                      ? `2px solid ${colorPalette.primary}`
-                      : undefined,
-                    color: colorPalette.textMuted,
-                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
-                  }}
-                >
-                  Enter text here...
-                </div>
-              </div>
+              {/* Screen glare effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
 
-          {/* Notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-3xl" />
+          {/* Frame highlight */}
+          <div className="absolute inset-0 rounded-[3rem] ring-1 ring-white/10 pointer-events-none" />
         </div>
+
+        {/* Reflection under phone */}
+        <div
+          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4/5 h-8 blur-xl opacity-40"
+          style={{ background: `radial-gradient(ellipse, ${colorPalette.primary}40, transparent)` }}
+        />
+      </div>
+
+      {/* Color Palette Strip */}
+      <div className="flex items-center justify-center gap-1.5 px-4">
+        {keyColors.slice(0, 6).map((colorItem, idx) => (
+          <div key={idx} className="flex flex-col items-center gap-1">
+            <div
+              className="w-6 h-6 rounded-md border border-black/10 shadow-sm"
+              style={{ backgroundColor: colorItem.color }}
+              title={`${colorItem.name}: ${colorItem.color}`}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Onboarding/Value Prop Screen
+ */
+function OnboardingScreen({
+  colorPalette,
+  typography,
+  componentPatterns,
+  name,
+}: {
+  colorPalette: any
+  typography: any
+  componentPatterns: any
+  name: string
+}) {
+  return (
+    <div className="flex flex-col items-center justify-between h-full text-center">
+      {/* Hero Content */}
+      <div className="flex-1 flex flex-col items-center justify-center space-y-4 px-2">
+        {/* Icon/Visual Element */}
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg"
+          style={{
+            background: `linear-gradient(135deg, ${colorPalette.primary}, ${colorPalette.accent})`,
+          }}
+        >
+          <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+
+        {/* Headline */}
+        <h1
+          className="text-2xl leading-tight"
+          style={{
+            fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+            fontWeight: typography.fontWeight.bold,
+            color: colorPalette.text,
+          }}
+        >
+          Welcome to {name}
+        </h1>
+
+        {/* Description */}
+        <p
+          className="text-sm leading-relaxed max-w-xs"
+          style={{
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            fontWeight: typography.fontWeight.normal,
+            color: colorPalette.textSecondary,
+          }}
+        >
+          Experience a beautifully designed interface that puts your needs first
+        </p>
+      </div>
+
+      {/* CTA Area */}
+      <div className="w-full space-y-3">
+        {/* Primary Button */}
+        <button
+          className="w-full py-3.5 text-sm font-semibold transition-transform active:scale-[0.98]"
+          style={{
+            backgroundColor: colorPalette.primary,
+            color: '#FFFFFF',
+            borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+            boxShadow: componentPatterns.buttons.hasShadow ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            fontWeight: typography.fontWeight.semibold,
+          }}
+        >
+          Get Started
+        </button>
+
+        {/* Skip Link */}
+        <button
+          className="w-full text-sm"
+          style={{
+            color: colorPalette.textSecondary,
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            fontWeight: typography.fontWeight.normal,
+          }}
+        >
+          Skip for now
+        </button>
+
+        {/* Page Indicators */}
+        <div className="flex items-center justify-center gap-1.5 pt-2">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="rounded-full transition-all"
+              style={{
+                width: i === 1 ? '20px' : '6px',
+                height: '6px',
+                backgroundColor: i === 1 ? colorPalette.primary : colorPalette.border || colorPalette.textSecondary + '40',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Home/Main Navigation Screen
+ */
+function HomeScreen({
+  colorPalette,
+  typography,
+  componentPatterns,
+}: {
+  colorPalette: any
+  typography: any
+  componentPatterns: any
+}) {
+  return (
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="space-y-1 mb-6">
+        <h2
+          className="text-xl"
+          style={{
+            fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+            fontWeight: typography.fontWeight.bold,
+            color: colorPalette.text,
+          }}
+        >
+          Good morning
+        </h2>
+        <p
+          className="text-xs"
+          style={{
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            color: colorPalette.textSecondary,
+          }}
+        >
+          Ready to get started?
+        </p>
+      </div>
+
+      {/* Quick Stats Card */}
+      <div
+        className="p-4 mb-4"
+        style={{
+          backgroundColor: colorPalette.surface,
+          borderRadius: `${componentPatterns.cards.borderRadius}px`,
+          border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border}` : 'none',
+          boxShadow: componentPatterns.cards.hasShadow
+            ? componentPatterns.cards.shadowIntensity === 'strong'
+              ? '0 8px 16px rgba(0,0,0,0.12)'
+              : '0 2px 8px rgba(0,0,0,0.06)'
+            : 'none',
+        }}
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <p
+              className="text-xs mb-1"
+              style={{
+                fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                color: colorPalette.textSecondary,
+              }}
+            >
+              Your progress
+            </p>
+            <p
+              className="text-2xl"
+              style={{
+                fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+                fontWeight: typography.fontWeight.bold,
+                color: colorPalette.text,
+              }}
+            >
+              75%
+            </p>
+          </div>
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: colorPalette.accent + '20' }}
+          >
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke={colorPalette.accent} strokeWidth="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Action Grid */}
+      <div className="grid grid-cols-2 gap-3 flex-1">
+        {[
+          { label: 'Start', icon: 'play' },
+          { label: 'Browse', icon: 'search' },
+          { label: 'Activity', icon: 'chart' },
+          { label: 'Settings', icon: 'settings' },
+        ].map((item, idx) => (
+          <button
+            key={idx}
+            className="flex flex-col items-center justify-center gap-2 py-6 transition-transform active:scale-95"
+            style={{
+              backgroundColor: colorPalette.surface,
+              borderRadius: `${componentPatterns.cards.borderRadius}px`,
+              border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border}` : 'none',
+              boxShadow: componentPatterns.cards.hasShadow ? '0 2px 4px rgba(0,0,0,0.04)' : 'none',
+            }}
+          >
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: colorPalette.primary + '15' }}
+            >
+              <div className="w-5 h-5" style={{ color: colorPalette.primary }}>
+                {/* Placeholder icon */}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+              </div>
+            </div>
+            <span
+              className="text-xs font-medium"
+              style={{
+                fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                color: colorPalette.text,
+              }}
+            >
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Selection Screen (Multi-select Cards)
+ */
+function SelectionScreen({
+  colorPalette,
+  typography,
+  componentPatterns,
+}: {
+  colorPalette: any
+  typography: any
+  componentPatterns: any
+}) {
+  const selectedIndices = [1, 3] // Show some as selected
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="mb-6">
+        <h2
+          className="text-lg mb-1"
+          style={{
+            fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+            fontWeight: typography.fontWeight.bold,
+            color: colorPalette.text,
+          }}
+        >
+          Choose your interests
+        </h2>
+        <p
+          className="text-xs"
+          style={{
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            color: colorPalette.textSecondary,
+          }}
+        >
+          Select all that apply
+        </p>
+      </div>
+
+      {/* Selection Grid */}
+      <div className="grid grid-cols-2 gap-3 flex-1">
+        {['Design', 'Development', 'Marketing', 'Business', 'Writing', 'Photography'].map((item, idx) => {
+          const isSelected = selectedIndices.includes(idx)
+          return (
+            <button
+              key={idx}
+              className="flex flex-col items-center justify-center gap-2 p-4 transition-all"
+              style={{
+                backgroundColor: isSelected
+                  ? (colorPalette.primary + '10')
+                  : colorPalette.surface,
+                borderRadius: `${componentPatterns.cards.borderRadius}px`,
+                border: isSelected
+                  ? `2px solid ${colorPalette.primary}`
+                  : componentPatterns.cards.hasBorder
+                  ? `1px solid ${colorPalette.border}`
+                  : 'none',
+                boxShadow: isSelected
+                  ? `0 0 0 4px ${colorPalette.primary}20`
+                  : componentPatterns.cards.hasShadow ? '0 2px 4px rgba(0,0,0,0.04)' : 'none',
+              }}
+            >
+              {/* Icon */}
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center"
+                style={{
+                  backgroundColor: isSelected
+                    ? colorPalette.primary
+                    : colorPalette.accent + '15'
+                }}
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={isSelected ? '#FFFFFF' : colorPalette.accent}
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10"/>
+                  {isSelected && <path d="M9 12l2 2 4-4"/>}
+                </svg>
+              </div>
+
+              {/* Label */}
+              <span
+                className="text-xs font-medium text-center"
+                style={{
+                  fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                  color: isSelected ? colorPalette.primary : colorPalette.text,
+                }}
+              >
+                {item}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Continue Button */}
+      <button
+        className="w-full py-3.5 mt-4 text-sm font-semibold transition-transform active:scale-[0.98]"
+        style={{
+          backgroundColor: colorPalette.primary,
+          color: '#FFFFFF',
+          borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+          boxShadow: componentPatterns.buttons.hasShadow ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+          fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+          fontWeight: typography.fontWeight.semibold,
+        }}
+      >
+        Continue (2 selected)
+      </button>
+    </div>
+  )
+}
+
+/**
+ * Core Action Screen (Form/Input focused)
+ */
+function ActionScreen({
+  colorPalette,
+  typography,
+  componentPatterns,
+}: {
+  colorPalette: any
+  typography: any
+  componentPatterns: any
+}) {
+  return (
+    <div className="flex flex-col h-full">
+      {/* Header with back button */}
+      <div className="flex items-center gap-3 mb-6">
+        <button
+          className="w-8 h-8 rounded-full flex items-center justify-center"
+          style={{ backgroundColor: colorPalette.surface }}
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={colorPalette.text} strokeWidth="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <h2
+          className="text-lg flex-1"
+          style={{
+            fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+            fontWeight: typography.fontWeight.bold,
+            color: colorPalette.text,
+          }}
+        >
+          Create New
+        </h2>
+      </div>
+
+      {/* Form Content */}
+      <div className="flex-1 space-y-4">
+        {/* Input Field 1 */}
+        <div className="space-y-2">
+          <label
+            className="text-xs font-medium"
+            style={{
+              fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+              color: colorPalette.text,
+            }}
+          >
+            Title
+          </label>
+          <input
+            type="text"
+            placeholder="Enter title"
+            className="w-full px-3 py-2.5 text-sm"
+            style={{
+              backgroundColor: colorPalette.surface,
+              borderRadius: `${componentPatterns.inputs.borderRadius}px`,
+              border: componentPatterns.inputs.borderStyle === 'solid'
+                ? `1px solid ${colorPalette.border}`
+                : 'none',
+              borderBottom: componentPatterns.inputs.borderStyle === 'underline'
+                ? `2px solid ${colorPalette.primary}`
+                : undefined,
+              color: colorPalette.text,
+              fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            }}
+          />
+        </div>
+
+        {/* Input Field 2 */}
+        <div className="space-y-2">
+          <label
+            className="text-xs font-medium"
+            style={{
+              fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+              color: colorPalette.text,
+            }}
+          >
+            Description
+          </label>
+          <textarea
+            placeholder="Add details..."
+            rows={4}
+            className="w-full px-3 py-2.5 text-sm resize-none"
+            style={{
+              backgroundColor: colorPalette.surface,
+              borderRadius: `${componentPatterns.inputs.borderRadius}px`,
+              border: componentPatterns.inputs.borderStyle === 'solid'
+                ? `1px solid ${colorPalette.border}`
+                : 'none',
+              color: colorPalette.text,
+              fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            }}
+          />
+        </div>
+
+        {/* Status Card */}
+        <div
+          className="p-3 flex items-center gap-3"
+          style={{
+            backgroundColor: colorPalette.success ? (colorPalette.success + '15') : (colorPalette.primary + '10'),
+            borderRadius: `${componentPatterns.cards.borderRadius}px`,
+            border: `1px solid ${colorPalette.success || colorPalette.primary}40`,
+          }}
+        >
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: colorPalette.success || colorPalette.primary }}
+          >
+            <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div className="flex-1">
+            <p
+              className="text-xs font-medium"
+              style={{
+                fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                color: colorPalette.text,
+              }}
+            >
+              Ready to publish
+            </p>
+            <p
+              className="text-[10px]"
+              style={{
+                fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                color: colorPalette.textSecondary,
+              }}
+            >
+              All fields completed
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex gap-3 mt-4">
+        {componentPatterns.buttons.variants.includes('outline') && (
+          <button
+            className="flex-1 py-3 text-sm font-semibold border-2 transition-transform active:scale-95"
+            style={{
+              borderColor: colorPalette.primary,
+              color: colorPalette.primary,
+              backgroundColor: 'transparent',
+              borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+              fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            }}
+          >
+            Save Draft
+          </button>
+        )}
+        <button
+          className="flex-1 py-3 text-sm font-semibold transition-transform active:scale-[0.98]"
+          style={{
+            backgroundColor: colorPalette.primary,
+            color: '#FFFFFF',
+            borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+            boxShadow: componentPatterns.buttons.hasShadow ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+            fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+            fontWeight: typography.fontWeight.semibold,
+          }}
+        >
+          Publish
+        </button>
       </div>
     </div>
   )
