@@ -110,67 +110,86 @@ function getMimeType(url: string): string {
 // Prompt Engineering
 // ============================================================================
 
-const ANALYSIS_PROMPT = `You are an expert mobile UI/UX designer analyzing app screenshots. Provide a comprehensive design system analysis.
+const ANALYSIS_PROMPT = `You are an expert mobile UI/UX designer analyzing app screenshots. Provide a comprehensive app analysis.
 
 Analyze these app screenshots and extract:
 
-## 1. Overall Style
-Describe the overall design philosophy, visual approach, and emotional tone in 2-3 sentences.
-
-## 2. Color Palette
-Extract the primary color palette with hex codes:
-- Primary colors (brand colors, 2-3 main colors)
-- Secondary colors (supporting colors)
-- Accent colors (highlights, CTAs)
-- Background colors (surfaces, cards)
-- Text colors (primary, secondary, disabled)
-
-## 3. Typography
-Identify font families and usage:
-- Heading fonts (family, size range, weight)
-- Body fonts (family, size range, weight)
-- Special fonts (if any, like monospace for code)
-
-## 4. Spacing & Layout
-- Grid system (if evident)
-- Common padding/margin values
-- Card/container styling
-- Border radius patterns
-
-## 5. Components
-Identify common UI components and their styles:
-- Buttons (primary, secondary, variants)
-- Input fields and forms
-- Cards and containers
-- Navigation patterns
-- Icons and imagery style
-
-## 6. Unique Design Patterns
-Any distinctive or noteworthy design choices that make this app stand out.
+1. Screen-by-screen analysis: Name each screen, identify its type, list components, patterns, navigation elements, and interactions
+2. Design patterns: Identify UI patterns used across screens (e.g., bottom navigation, card layouts, list patterns)
+3. User flows: Map out key user journeys through the app (e.g., onboarding, core task completion)
+4. Feature categorization: Classify features as core, nice-to-have, or differentiators
+5. Color palette: Extract brand colors with hex codes (primary, secondary, accent, background, text colors)
+6. Typography: Identify font families, sizes, and weights
+7. Overall style: Describe design philosophy and emotional tone
+8. Target audience: Who is this app designed for?
+9. Unique selling points: What makes this app stand out?
+10. Improvement opportunities: What could be enhanced?
 
 Return ONLY valid JSON in this exact structure:
 {
-  "overallStyle": "string",
+  "screensAnalyzed": 0,
+  "screens": [
+    {
+      "index": 0,
+      "screenName": "string",
+      "screenType": "onboarding|home|list|detail|form|settings|profile|modal|other",
+      "components": ["string"],
+      "patterns": ["string"],
+      "navigation": ["string"],
+      "interactions": ["string"],
+      "notes": "string"
+    }
+  ],
+  "designPatterns": [
+    {
+      "name": "string",
+      "description": "string",
+      "frequency": "single_screen|multiple_screens|all_screens",
+      "components": ["string"],
+      "screenshotIndices": [0]
+    }
+  ],
+  "userFlows": [
+    {
+      "name": "string",
+      "description": "string",
+      "stepCount": 0,
+      "screens": ["string"],
+      "screenshotIndices": [0],
+      "complexity": "simple|moderate|complex"
+    }
+  ],
+  "featureSet": {
+    "core": ["string"],
+    "niceToHave": ["string"],
+    "differentiators": ["string"]
+  },
   "colorPalette": {
-    "primary": [{"name": "string", "hex": "#RRGGBB", "usage": "string"}],
-    "secondary": [{"name": "string", "hex": "#RRGGBB", "usage": "string"}],
-    "accent": [{"name": "string", "hex": "#RRGGBB", "usage": "string"}],
-    "background": [{"name": "string", "hex": "#RRGGBB", "usage": "string"}],
-    "text": [{"name": "string", "hex": "#RRGGBB", "usage": "string"}]
+    "primary": "#RRGGBB",
+    "secondary": "#RRGGBB",
+    "accent": "#RRGGBB",
+    "background": "#RRGGBB",
+    "surface": "#RRGGBB",
+    "text": "#RRGGBB",
+    "textSecondary": "#RRGGBB",
+    "success": "#RRGGBB",
+    "warning": "#RRGGBB",
+    "error": "#RRGGBB"
   },
   "typography": {
-    "heading": {"family": "string", "sizes": "string", "weights": "string"},
-    "body": {"family": "string", "sizes": "string", "weights": "string"}
+    "headingFont": "string",
+    "headingSize": "string",
+    "headingWeight": "string",
+    "bodyFont": "string",
+    "bodySize": "string",
+    "bodyWeight": "string",
+    "captionFont": "string",
+    "captionSize": "string"
   },
-  "spacing": {
-    "gridSystem": "string",
-    "commonValues": ["string"],
-    "borderRadius": "string"
-  },
-  "components": [
-    {"type": "string", "description": "string", "variants": ["string"]}
-  ],
-  "uniquePatterns": ["string"]
+  "overallStyle": "string",
+  "targetAudience": "string",
+  "uniqueSellingPoints": ["string"],
+  "improvementOpportunities": ["string"]
 }`;
 
 // ============================================================================
@@ -299,10 +318,11 @@ export async function analyzeAppScreenshots(
 
     console.log(`[Gemini] Success! Tokens used: ${tokensUsed}`);
 
-    // Add analyzedAt timestamp to match expected interface
+    // Add analyzedAt timestamp and screensAnalyzed count to match expected interface
     const analysisWithTimestamp = {
       ...analysis,
       analyzedAt: new Date().toISOString(),
+      screensAnalyzed: analysis.screensAnalyzed || screenshots.length,
     } as AppAnalysis;
 
     return {
