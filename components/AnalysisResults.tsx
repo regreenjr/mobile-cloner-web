@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { AlertCircle, RefreshCw, Download, Save, Palette, List, Layout, GitBranch, Star, Sparkles, Zap } from "lucide-react"
+import { AlertCircle, RefreshCw, Download, Save, Palette, List, Layout, GitBranch, Star, Sparkles, Zap, Eye } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 import type {
@@ -162,7 +162,7 @@ export interface EmptyStateProps {
 /**
  * Tab identifiers for the analysis results tabs
  */
-export type AnalysisTab = "design" | "features" | "patterns" | "flows"
+export type AnalysisTab = "design" | "features" | "patterns" | "flows" | "styleGuide"
 
 /**
  * Props for tab configuration
@@ -185,6 +185,7 @@ export interface TabConfig {
  */
 export const ANALYSIS_TABS: TabConfig[] = [
   { id: "design", label: "Design Patterns", icon: <Palette className="h-4 w-4" /> },
+  { id: "styleGuide", label: "Style Guide", icon: <Eye className="h-4 w-4" /> },
   { id: "features", label: "Features", icon: <List className="h-4 w-4" /> },
   { id: "patterns", label: "UI Patterns", icon: <Layout className="h-4 w-4" /> },
   { id: "flows", label: "User Flows", icon: <GitBranch className="h-4 w-4" /> },
@@ -1043,6 +1044,7 @@ export interface SectionSkeletonProps {
 function SectionSkeleton({ section = "design", className }: SectionSkeletonProps) {
   const skeletonMap: Record<AnalysisTab, React.ReactNode> = {
     design: <DesignPatternsSectionSkeleton />,
+    styleGuide: <DesignPatternsSectionSkeleton />,
     features: <FeatureListSectionSkeleton />,
     patterns: <UIPatternsSectionSkeleton />,
     flows: <UserFlowSectionSkeleton />,
@@ -1166,6 +1168,549 @@ function TypographyDisplay({ typography, className }: TypographyDisplayProps) {
           )}
         </div>
       ))}
+    </div>
+  )
+}
+
+/**
+ * LiveTypographyPreview - Shows actual rendered text samples using extracted fonts
+ */
+function LiveTypographyPreview({
+  typography,
+  colorPalette,
+  className
+}: {
+  typography: AnalysisTypography
+  colorPalette: ColorPalette
+  className?: string
+}) {
+  if (!typography) {
+    return null
+  }
+
+  return (
+    <div className={cn("space-y-6", className)}>
+      {/* Heading Sample */}
+      <div className="space-y-3">
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          Heading Style
+        </p>
+        <div
+          className="rounded-lg border bg-card p-6"
+          style={{
+            fontFamily: typography.headingFont,
+            fontSize: typography.headingSize,
+            fontWeight: typography.headingWeight,
+            color: colorPalette.text
+          }}
+        >
+          The quick brown fox jumps over the lazy dog
+        </div>
+        <p className="text-xs text-muted-foreground">
+          {typography.headingFont} · {typography.headingSize} · {typography.headingWeight}
+        </p>
+      </div>
+
+      {/* Body Sample */}
+      <div className="space-y-3">
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          Body Style
+        </p>
+        <div
+          className="rounded-lg border bg-card p-6"
+          style={{
+            fontFamily: typography.bodyFont,
+            fontSize: typography.bodySize,
+            fontWeight: typography.bodyWeight,
+            color: colorPalette.text
+          }}
+        >
+          The quick brown fox jumps over the lazy dog. This is how body text appears in the application with proper sizing and weight.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          {typography.bodyFont} · {typography.bodySize} · {typography.bodyWeight}
+        </p>
+      </div>
+
+      {/* Caption Sample (if available) */}
+      {typography.captionFont && (
+        <div className="space-y-3">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            Caption Style
+          </p>
+          <div
+            className="rounded-lg border bg-card p-6"
+            style={{
+              fontFamily: typography.captionFont,
+              fontSize: typography.captionSize,
+              color: colorPalette.textSecondary
+            }}
+          >
+            Caption text style with smaller sizing
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {typography.captionFont} · {typography.captionSize}
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/**
+ * ColorCombinationGrid - Shows how colors work together
+ */
+function ColorCombinationGrid({
+  colorPalette,
+  typography,
+  className
+}: {
+  colorPalette: ColorPalette
+  typography: AnalysisTypography
+  className?: string
+}) {
+  const combinations = [
+    {
+      label: "Primary on Background",
+      bg: colorPalette.background,
+      text: colorPalette.primary,
+      sample: "Primary Text"
+    },
+    {
+      label: "Text on Background",
+      bg: colorPalette.background,
+      text: colorPalette.text,
+      sample: "Body Text"
+    },
+    {
+      label: "Text on Surface",
+      bg: colorPalette.surface,
+      text: colorPalette.text,
+      sample: "Surface Text"
+    },
+    {
+      label: "Primary on Surface",
+      bg: colorPalette.surface,
+      text: colorPalette.primary,
+      sample: "Primary on Card"
+    },
+    {
+      label: "Accent on Background",
+      bg: colorPalette.background,
+      text: colorPalette.accent,
+      sample: "Accent Text"
+    },
+    {
+      label: "Secondary Text",
+      bg: colorPalette.background,
+      text: colorPalette.textSecondary,
+      sample: "Subtitle Text"
+    },
+  ]
+
+  return (
+    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", className)}>
+      {combinations.map((combo, idx) => (
+        <div key={idx} className="space-y-2">
+          <p className="text-xs font-medium text-muted-foreground">
+            {combo.label}
+          </p>
+          <div
+            className="rounded-lg border p-6 transition-transform hover:scale-105"
+            style={{
+              backgroundColor: combo.bg,
+              color: combo.text,
+              fontFamily: typography.bodyFont
+            }}
+          >
+            <p className="font-semibold">{combo.sample}</p>
+            <p className="text-sm mt-2 opacity-80">Sample text content</p>
+          </div>
+          <div className="flex gap-2 text-xs font-mono">
+            <span className="text-muted-foreground">BG:</span>
+            <span>{combo.bg}</span>
+            <span className="text-muted-foreground">Text:</span>
+            <span>{combo.text}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * ComponentShowcase - Shows styled UI components using the design system
+ */
+function ComponentShowcase({
+  colorPalette,
+  typography,
+  className
+}: {
+  colorPalette: ColorPalette
+  typography: AnalysisTypography
+  className?: string
+}) {
+  return (
+    <div className={cn("space-y-8", className)}>
+      {/* Buttons */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold">Button Styles</h4>
+        <div className="flex flex-wrap gap-3">
+          {/* Primary Button */}
+          <button
+            className="px-6 py-2.5 rounded-lg font-medium transition-transform hover:scale-105 shadow-sm"
+            style={{
+              backgroundColor: colorPalette.primary,
+              color: colorPalette.background,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Primary Button
+          </button>
+
+          {/* Secondary Button */}
+          <button
+            className="px-6 py-2.5 rounded-lg font-medium transition-transform hover:scale-105 shadow-sm"
+            style={{
+              backgroundColor: colorPalette.secondary,
+              color: colorPalette.background,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Secondary Button
+          </button>
+
+          {/* Accent Button */}
+          <button
+            className="px-6 py-2.5 rounded-lg font-medium transition-transform hover:scale-105 shadow-sm"
+            style={{
+              backgroundColor: colorPalette.accent,
+              color: colorPalette.background,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Accent Button
+          </button>
+
+          {/* Outline Button */}
+          <button
+            className="px-6 py-2.5 rounded-lg font-medium transition-transform hover:scale-105 border-2"
+            style={{
+              backgroundColor: 'transparent',
+              borderColor: colorPalette.primary,
+              color: colorPalette.primary,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Outline Button
+          </button>
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold">Card Examples</h4>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Standard Card */}
+          <div
+            className="rounded-xl p-6 shadow-md border"
+            style={{
+              backgroundColor: colorPalette.surface,
+              borderColor: colorPalette.primary + '20',
+            }}
+          >
+            <h3
+              className="text-lg font-bold mb-2"
+              style={{
+                color: colorPalette.text,
+                fontFamily: typography.headingFont,
+              }}
+            >
+              Card Title
+            </h3>
+            <p
+              className="mb-4"
+              style={{
+                color: colorPalette.textSecondary,
+                fontFamily: typography.bodyFont,
+                fontSize: typography.bodySize,
+              }}
+            >
+              This is a sample card using the extracted design system colors and typography.
+            </p>
+            <button
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{
+                backgroundColor: colorPalette.primary,
+                color: colorPalette.background,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Learn More
+            </button>
+          </div>
+
+          {/* Accent Card */}
+          <div
+            className="rounded-xl p-6 shadow-md border-2"
+            style={{
+              backgroundColor: colorPalette.accent + '10',
+              borderColor: colorPalette.accent,
+            }}
+          >
+            <h3
+              className="text-lg font-bold mb-2"
+              style={{
+                color: colorPalette.accent,
+                fontFamily: typography.headingFont,
+              }}
+            >
+              Featured Card
+            </h3>
+            <p
+              className="mb-4"
+              style={{
+                color: colorPalette.text,
+                fontFamily: typography.bodyFont,
+                fontSize: typography.bodySize,
+              }}
+            >
+              An accent-colored card variant to highlight important content.
+            </p>
+            <button
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{
+                backgroundColor: colorPalette.accent,
+                color: colorPalette.background,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Input Fields */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold">Input Examples</h4>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <label
+              className="text-sm font-medium"
+              style={{
+                color: colorPalette.text,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="user@example.com"
+              className="w-full px-4 py-2.5 rounded-lg border-2 outline-none transition-colors focus:scale-[1.01]"
+              style={{
+                backgroundColor: colorPalette.background,
+                borderColor: colorPalette.primary + '40',
+                color: colorPalette.text,
+                fontFamily: typography.bodyFont,
+              }}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label
+              className="text-sm font-medium"
+              style={{
+                color: colorPalette.text,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Full Name
+            </label>
+            <input
+              type="text"
+              placeholder="John Doe"
+              className="w-full px-4 py-2.5 rounded-lg border-2 outline-none transition-colors focus:scale-[1.01]"
+              style={{
+                backgroundColor: colorPalette.background,
+                borderColor: colorPalette.primary + '40',
+                color: colorPalette.text,
+                fontFamily: typography.bodyFont,
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Badges/Tags */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold">Badge Styles</h4>
+        <div className="flex flex-wrap gap-2">
+          <span
+            className="px-3 py-1 rounded-full text-sm font-medium"
+            style={{
+              backgroundColor: colorPalette.primary + '20',
+              color: colorPalette.primary,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Primary Badge
+          </span>
+          <span
+            className="px-3 py-1 rounded-full text-sm font-medium"
+            style={{
+              backgroundColor: colorPalette.secondary + '20',
+              color: colorPalette.secondary,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Secondary Badge
+          </span>
+          <span
+            className="px-3 py-1 rounded-full text-sm font-medium"
+            style={{
+              backgroundColor: colorPalette.accent + '20',
+              color: colorPalette.accent,
+              fontFamily: typography.bodyFont,
+            }}
+          >
+            Accent Badge
+          </span>
+          {colorPalette.success && (
+            <span
+              className="px-3 py-1 rounded-full text-sm font-medium"
+              style={{
+                backgroundColor: colorPalette.success + '20',
+                color: colorPalette.success,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Success
+            </span>
+          )}
+          {colorPalette.warning && (
+            <span
+              className="px-3 py-1 rounded-full text-sm font-medium"
+              style={{
+                backgroundColor: colorPalette.warning + '20',
+                color: colorPalette.warning,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Warning
+            </span>
+          )}
+          {colorPalette.error && (
+            <span
+              className="px-3 py-1 rounded-full text-sm font-medium"
+              style={{
+                backgroundColor: colorPalette.error + '20',
+                color: colorPalette.error,
+                fontFamily: typography.bodyFont,
+              }}
+            >
+              Error
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * LivingStyleGuideSection - Complete visual preview of the design system
+ */
+function LivingStyleGuideSection({
+  colorPalette,
+  typography,
+  overallStyle,
+  className,
+}: {
+  colorPalette: ColorPalette
+  typography: AnalysisTypography
+  overallStyle: string
+  className?: string
+}) {
+  if (!colorPalette || !typography) {
+    return (
+      <div className={cn("space-y-6", className)}>
+        <EmptyState
+          message="Insufficient data to generate style guide"
+          icon={<Eye className="h-8 w-8" />}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn("space-y-8", className)}>
+      {/* Overview */}
+      {overallStyle && (
+        <Card className="bg-gradient-to-br from-card to-muted/20">
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold flex items-center gap-2">
+              <Eye className="h-5 w-5" />
+              Living Style Guide
+            </CardTitle>
+            <CardDescription>
+              Visual preview of the extracted design system
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed text-sm">{overallStyle}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Typography Samples */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Typography in Action</CardTitle>
+          <CardDescription>
+            See how the fonts render at actual sizes
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <LiveTypographyPreview
+            typography={typography}
+            colorPalette={colorPalette}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Color Combinations */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Color Combinations</CardTitle>
+          <CardDescription>
+            How colors work together in context
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ColorCombinationGrid
+            colorPalette={colorPalette}
+            typography={typography}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Component Showcase */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Component Preview</CardTitle>
+          <CardDescription>
+            UI components styled with the extracted design system
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ComponentShowcase
+            colorPalette={colorPalette}
+            typography={typography}
+          />
+        </CardContent>
+      </Card>
     </div>
   )
 }
@@ -2085,6 +2630,15 @@ export function AnalysisResults({
         {/* Design Patterns Tab */}
         <TabsContent value="design" className="mt-6">
           <DesignPatternsSection
+            colorPalette={analysis.colorPalette}
+            typography={analysis.typography}
+            overallStyle={analysis.overallStyle}
+          />
+        </TabsContent>
+
+        {/* Style Guide Tab */}
+        <TabsContent value="styleGuide" className="mt-6">
+          <LivingStyleGuideSection
             colorPalette={analysis.colorPalette}
             typography={analysis.typography}
             overallStyle={analysis.overallStyle}
