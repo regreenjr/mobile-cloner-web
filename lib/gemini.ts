@@ -179,12 +179,25 @@ Return ONLY valid JSON in this exact structure:
 // ============================================================================
 
 /**
+ * Options for analyzing screenshots (compatibility with Claude API)
+ */
+interface AnalysisOptions {
+  appId?: string;
+  forceRefresh?: boolean;
+  timeoutMs?: number;
+  onCacheStatus?: (status: any) => void;
+  onBatching?: (info: any) => void;
+  onRetry?: (attempt: number, error: any, delayMs: number) => void;
+}
+
+/**
  * Analyze app screenshots with Gemini 2.0 Flash
  */
 export async function analyzeAppScreenshots(
   appName: string,
-  screenshots: Screenshot[]
-): Promise<Result<GeminiAnalysisResult>> {
+  screenshots: Screenshot[],
+  options?: AnalysisOptions
+): Promise<Result<AppAnalysis>> {
   // Validate API key
   if (!GEMINI_API_KEY) {
     return {
@@ -287,13 +300,15 @@ export async function analyzeAppScreenshots(
 
     console.log(`[Gemini] Success! Tokens used: ${tokensUsed}`);
 
+    // Add analyzedAt timestamp to match expected interface
+    const analysisWithTimestamp = {
+      ...analysis,
+      analyzedAt: new Date().toISOString(),
+    } as AppAnalysis;
+
     return {
       success: true,
-      data: {
-        analysis,
-        tokensUsed,
-        model: MODEL_NAME,
-      },
+      data: analysisWithTimestamp,
     };
   } catch (error: any) {
     console.error('[Gemini] Analysis failed:', error);
