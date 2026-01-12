@@ -359,9 +359,9 @@ export function getMaxScreenshotsPerRequest(): number {
  */
 export function getRateLimitStatus() {
   return {
-    hasLimit: false,
-    remaining: Infinity,
-    resetAt: null,
+    isLimited: false,
+    waitTimeMs: 0,
+    consecutiveHits: 0,
   };
 }
 
