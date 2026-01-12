@@ -49,7 +49,7 @@ export type Result<T, E = ClaudeApiError> =
 // ============================================================================
 
 function createApiError(
-  code: string,
+  code: ClaudeApiError['code'],
   message: string,
   userMessage?: string
 ): ClaudeApiError {
@@ -203,7 +203,7 @@ export async function analyzeAppScreenshots(
     return {
       success: false,
       error: createApiError(
-        'CONFIG_ERROR',
+        'VALIDATION_ERROR',
         'Gemini API key not configured',
         'Server configuration error. Please contact support.'
       ),
@@ -215,7 +215,7 @@ export async function analyzeAppScreenshots(
     return {
       success: false,
       error: createApiError(
-        'INVALID_INPUT',
+        'VALIDATION_ERROR',
         'No screenshots provided',
         'Please select at least one screenshot to analyze.'
       ),
@@ -226,7 +226,7 @@ export async function analyzeAppScreenshots(
     return {
       success: false,
       error: createApiError(
-        'TOO_MANY_SCREENSHOTS',
+        'VALIDATION_ERROR',
         `Maximum ${MAX_SCREENSHOTS} screenshots allowed`,
         `Please select ${MAX_SCREENSHOTS} or fewer screenshots.`
       ),
@@ -288,7 +288,7 @@ export async function analyzeAppScreenshots(
       return {
         success: false,
         error: createApiError(
-          'PARSE_ERROR',
+          'RESPONSE_PARSE_ERROR',
           'Failed to parse AI response',
           'AI returned invalid format. Please try again.'
         ),
@@ -318,7 +318,7 @@ export async function analyzeAppScreenshots(
       return {
         success: false,
         error: createApiError(
-          'AUTH_ERROR',
+          'API_KEY_INVALID',
           'Invalid API key',
           'Server configuration error. Please contact support.'
         ),
