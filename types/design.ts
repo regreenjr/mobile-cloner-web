@@ -184,7 +184,7 @@ export interface ReferenceAppAnalysis {
   featureSets: ExtractedFeature[];
   colorInsights: ColorInsights;
   typographyData: TypographyData;
-  componentInventory: ComponentInventory[];
+  componentInventory: ComponentUsageStats[];
   overallStyle: StyleInsights;
 }
 
@@ -226,7 +226,7 @@ export interface TypographyData {
   weightUsage: string[];
 }
 
-export interface ComponentInventory {
+export interface ComponentUsageStats {
   componentType: string;
   count: number;
   variations: string[];

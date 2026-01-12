@@ -72,22 +72,57 @@ export interface FeatureSet {
   differentiators: string[];
 }
 
-// Color palette extracted from screenshots
+// Color palette extracted from screenshots (enhanced with usage context)
 export interface ColorPalette {
+  // Primary colors with variants
   primary: string;
+  primaryLight?: string;
+  primaryDark?: string;
+
+  // Secondary colors with variants
   secondary: string;
+  secondaryLight?: string;
+  secondaryDark?: string;
+
+  // Accent colors
   accent: string;
+
+  // Background colors
   background: string;
+  backgroundSecondary?: string;
+
+  // Surface colors
   surface: string;
+  surfaceSecondary?: string;
+
+  // Text colors
   text: string;
   textSecondary: string;
+  textMuted?: string;
+
+  // Border colors
+  border?: string;
+  borderLight?: string;
+
+  // Semantic colors
   success?: string;
   warning?: string;
   error?: string;
+  info?: string;
 }
 
-// Typography information
+// Color with usage context (for detailed extraction)
+export interface ColorWithContext {
+  hex: string;
+  rgb?: string;
+  role: string;
+  usageContext: string;
+  description?: string;
+}
+
+// Typography information (comprehensive text styles)
 export interface AnalysisTypography {
+  // Legacy fields (kept for backwards compatibility)
   headingFont: string;
   headingSize: string;
   headingWeight: string;
@@ -96,6 +131,167 @@ export interface AnalysisTypography {
   bodyWeight: string;
   captionFont?: string;
   captionSize?: string;
+
+  // Enhanced typography system
+  textStyles?: {
+    h1?: TextStyle;
+    h2?: TextStyle;
+    h3?: TextStyle;
+    bodyLarge?: TextStyle;
+    bodyRegular?: TextStyle;
+    bodySmall?: TextStyle;
+    buttonText?: TextStyle;
+    label?: TextStyle;
+    caption?: TextStyle;
+  };
+}
+
+// Individual text style with exact specifications
+export interface TextStyle {
+  fontFamily: string;
+  fontSize: number; // in points
+  fontWeight: string | number;
+  lineHeight?: number;
+  letterSpacing?: number;
+  usage: string; // Description of where/how it's used
+}
+
+// Spacing and layout system
+export interface SpacingSystem {
+  // Screen-level spacing
+  screenPadding: {
+    horizontal: number; // px
+    topSafeArea: number; // px
+    bottomSafeArea: number; // px
+  };
+
+  // Vertical spacing between sections
+  verticalSpacing: {
+    small: number; // px
+    medium: number; // px
+    large: number; // px
+  };
+
+  // Component internal padding (commonly used values)
+  componentPadding: {
+    cards?: number; // px
+    buttons?: { vertical: number; horizontal: number }; // px
+    listItems?: { vertical: number; horizontal: number }; // px
+  };
+
+  // Gap between repeated elements
+  elementSpacing: {
+    listItemGap?: number; // px
+    gridGap?: number; // px
+  };
+}
+
+// Layout architecture patterns
+export interface LayoutArchitecture {
+  screenAnatomy: string; // Description of top-to-bottom structure
+  bottomCtaTreatment: 'fixed' | 'sticky' | 'inline' | 'none'; // How CTAs are positioned
+  safeAreaHandling: string; // How iOS notch/home indicator are handled
+  scrollingBehavior: string; // Fixed headers, scroll-to-dismiss, etc.
+  contentDensity: 'high' | 'medium' | 'low'; // Spacious vs compact
+}
+
+// Detailed component specifications
+export interface ComponentInventory {
+  buttons?: ButtonSpecs;
+  cards?: CardSpecs;
+  inputs?: InputSpecs;
+  navigation?: NavigationSpecs;
+  lists?: ListSpecs;
+  modals?: ModalSpecs;
+  progressIndicators?: ProgressSpecs;
+  other?: string[]; // Other unique components
+}
+
+export interface ButtonSpecs {
+  primaryButton?: {
+    size: string; // e.g., "48px height"
+    borderRadius: number; // px
+    backgroundColor: string;
+    textStyle: string;
+    shadow: string | null;
+  };
+  secondaryButton?: {
+    variations: string; // Description of how it differs from primary
+  };
+  textButton?: {
+    treatment: string;
+  };
+  iconButton?: {
+    size: string;
+    treatment: string;
+  };
+}
+
+export interface CardSpecs {
+  appearance: {
+    background: string;
+    border: string | null;
+    shadow: string | null;
+    borderRadius: number; // px
+  };
+  padding: number | string; // px or description
+  states?: {
+    selected?: string;
+    pressed?: string;
+  };
+}
+
+export interface InputSpecs {
+  defaultState: {
+    border: string;
+    background: string;
+    textStyle: string;
+  };
+  focusedState?: {
+    treatment: string;
+  };
+  errorState?: {
+    indication: string;
+  };
+  placeholderStyle?: string;
+}
+
+export interface NavigationSpecs {
+  header?: {
+    height: number; // px
+    background: string;
+    shadow: string | null;
+  };
+  backButton?: {
+    style: string;
+    position: string;
+  };
+  tabBar?: {
+    height: number; // px
+    hasIcons: boolean;
+    hasLabels: boolean;
+  };
+}
+
+export interface ListSpecs {
+  itemStructure: string; // Layout pattern description
+  separatorStyle: 'lines' | 'spacing' | 'none';
+  separatorSpacing?: number; // px
+}
+
+export interface ModalSpecs {
+  backgroundTreatment: string; // Dim level, blur
+  cardStyle: {
+    size: string;
+    position: 'center' | 'bottom' | 'top';
+    borderRadius: number; // px
+  };
+  closeMechanism: string; // X button, swipe, tap outside
+}
+
+export interface ProgressSpecs {
+  loadingStates: string; // Spinners, skeletons description
+  progressBars?: string; // Style if present
 }
 
 // Screen analysis from Claude
@@ -110,7 +306,7 @@ export interface ScreenAnalysis {
   notes?: string;
 }
 
-// Complete analysis result from Claude
+// Complete analysis result from Gemini (enhanced with Phase 1 fields)
 export interface AppAnalysis {
   analyzedAt: string;
   screensAnalyzed: number;
@@ -124,6 +320,11 @@ export interface AppAnalysis {
   targetAudience: string;
   uniqueSellingPoints: string[];
   improvementOpportunities: string[];
+
+  // Phase 1 enhancements: Core Design System
+  spacingSystem?: SpacingSystem;
+  layoutArchitecture?: LayoutArchitecture;
+  componentInventory?: ComponentInventory;
 }
 
 // Feature extracted from app

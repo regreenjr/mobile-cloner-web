@@ -110,20 +110,70 @@ function getMimeType(url: string): string {
 // Prompt Engineering
 // ============================================================================
 
-const ANALYSIS_PROMPT = `You are an expert mobile UI/UX designer analyzing app screenshots. Provide a comprehensive app analysis.
+const ANALYSIS_PROMPT = `You are an expert mobile UI/UX designer analyzing app screenshots. Extract precise design system specifications, measurements, and patterns.
+
+CRITICAL REQUIREMENTS:
+- Use EXACT hex codes for all colors (e.g., #3B82F6, not "blue")
+- Provide EXACT pixel/point measurements (e.g., 16px, not "medium")
+- Identify EXACT font names (e.g., "SF Pro Display", not "sans-serif")
+- Be SPECIFIC, not generic (e.g., "12px rounded corners" not "slightly rounded")
+- Extract measurements by visual analysis of the screenshots
 
 Analyze these app screenshots and extract:
 
-1. Screen-by-screen analysis: Name each screen, identify its type, list components, patterns, navigation elements, and interactions
-2. Design patterns: Identify UI patterns used across screens (e.g., bottom navigation, card layouts, list patterns)
-3. User flows: Map out key user journeys through the app (e.g., onboarding, core task completion)
-4. Feature categorization: Classify features as core, nice-to-have, or differentiators
-5. Color palette: Extract brand colors with hex codes (primary, secondary, accent, background, text colors)
-6. Typography: Identify font families, sizes, and weights
-7. Overall style: Describe design philosophy and emotional tone
-8. Target audience: Who is this app designed for?
-9. Unique selling points: What makes this app stand out?
-10. Improvement opportunities: What could be enhanced?
+## 1. COMPREHENSIVE COLOR PALETTE
+Extract ALL colors with exact hex codes:
+- Primary color + light/dark variants
+- Secondary color + light/dark variants
+- Accent colors
+- Background colors (main + secondary surfaces)
+- Surface colors (cards, elevated elements)
+- Text colors (primary, secondary, muted)
+- Border colors
+- Semantic colors (success, warning, error, info)
+
+## 2. COMPREHENSIVE TYPOGRAPHY SYSTEM
+Identify ALL text styles with exact specifications:
+- H1: Font family, size (pt), weight, line height, usage
+- H2: Font family, size (pt), weight, line height, usage
+- H3: Font family, size (pt), weight, line height, usage
+- Body Large: Font family, size (pt), weight, line height, usage
+- Body Regular: Font family, size (pt), weight, line height, usage
+- Body Small: Font family, size (pt), weight, line height, usage
+- Button Text: Font family, size (pt), weight, usage
+- Label: Font family, size (pt), weight, usage
+- Caption: Font family, size (pt), weight, usage
+
+## 3. SPACING & LAYOUT SYSTEM
+Measure exact spacing values:
+- Screen padding (horizontal, top safe area, bottom safe area) in px
+- Vertical spacing between sections (small, medium, large) in px
+- Component internal padding (cards, buttons, list items) in px
+- Gap between repeated elements (list items, grid) in px
+
+## 4. LAYOUT ARCHITECTURE
+- Screen anatomy: Describe top-to-bottom structure
+- Bottom CTA treatment: fixed, sticky, inline, or none
+- Safe area handling: How notch/home indicator are handled
+- Scrolling behavior: Fixed headers, scroll patterns
+- Content density: high, medium, or low
+
+## 5. COMPONENT INVENTORY
+Extract detailed specifications for:
+- **Buttons**: Primary (size, borderRadius px, bg color, text style, shadow), Secondary, Text, Icon
+- **Cards**: Appearance (bg, border, shadow, borderRadius px), Padding, States (selected, pressed)
+- **Inputs**: Default state (border, bg, text), Focused state, Error state, Placeholder style
+- **Navigation**: Header (height px, bg, shadow), Back button, Tab bar (if present)
+- **Lists**: Item structure, Separator style, Spacing
+- **Modals**: Background treatment, Card style (size, position, borderRadius px), Close mechanism
+- **Progress**: Loading states, Progress bars
+
+## 6-10. Standard Analysis (same as before)
+6. Screen-by-screen analysis
+7. Design patterns
+8. User flows
+9. Feature categorization
+10. Overall style, target audience, USPs, improvements
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -166,15 +216,25 @@ Return ONLY valid JSON in this exact structure:
   },
   "colorPalette": {
     "primary": "#RRGGBB",
+    "primaryLight": "#RRGGBB",
+    "primaryDark": "#RRGGBB",
     "secondary": "#RRGGBB",
+    "secondaryLight": "#RRGGBB",
+    "secondaryDark": "#RRGGBB",
     "accent": "#RRGGBB",
     "background": "#RRGGBB",
+    "backgroundSecondary": "#RRGGBB",
     "surface": "#RRGGBB",
+    "surfaceSecondary": "#RRGGBB",
     "text": "#RRGGBB",
     "textSecondary": "#RRGGBB",
+    "textMuted": "#RRGGBB",
+    "border": "#RRGGBB",
+    "borderLight": "#RRGGBB",
     "success": "#RRGGBB",
     "warning": "#RRGGBB",
-    "error": "#RRGGBB"
+    "error": "#RRGGBB",
+    "info": "#RRGGBB"
   },
   "typography": {
     "headingFont": "string",
@@ -184,7 +244,182 @@ Return ONLY valid JSON in this exact structure:
     "bodySize": "string",
     "bodyWeight": "string",
     "captionFont": "string",
-    "captionSize": "string"
+    "captionSize": "string",
+    "textStyles": {
+      "h1": {
+        "fontFamily": "string",
+        "fontSize": 34,
+        "fontWeight": "bold",
+        "lineHeight": 1.2,
+        "letterSpacing": 0,
+        "usage": "Main page titles"
+      },
+      "h2": {
+        "fontFamily": "string",
+        "fontSize": 28,
+        "fontWeight": "semibold",
+        "lineHeight": 1.3,
+        "usage": "Section headings"
+      },
+      "h3": {
+        "fontFamily": "string",
+        "fontSize": 22,
+        "fontWeight": "semibold",
+        "lineHeight": 1.3,
+        "usage": "Card titles, subsections"
+      },
+      "bodyLarge": {
+        "fontFamily": "string",
+        "fontSize": 18,
+        "fontWeight": "normal",
+        "lineHeight": 1.5,
+        "usage": "Large body text, important descriptions"
+      },
+      "bodyRegular": {
+        "fontFamily": "string",
+        "fontSize": 16,
+        "fontWeight": "normal",
+        "lineHeight": 1.5,
+        "usage": "Standard content, primary text"
+      },
+      "bodySmall": {
+        "fontFamily": "string",
+        "fontSize": 14,
+        "fontWeight": "normal",
+        "lineHeight": 1.4,
+        "usage": "Metadata, secondary information"
+      },
+      "buttonText": {
+        "fontFamily": "string",
+        "fontSize": 16,
+        "fontWeight": "semibold",
+        "usage": "All button labels"
+      },
+      "label": {
+        "fontFamily": "string",
+        "fontSize": 14,
+        "fontWeight": "medium",
+        "usage": "Input labels, tags"
+      },
+      "caption": {
+        "fontFamily": "string",
+        "fontSize": 12,
+        "fontWeight": "normal",
+        "lineHeight": 1.3,
+        "usage": "Fine print, hints, captions"
+      }
+    }
+  },
+  "spacingSystem": {
+    "screenPadding": {
+      "horizontal": 16,
+      "topSafeArea": 44,
+      "bottomSafeArea": 34
+    },
+    "verticalSpacing": {
+      "small": 8,
+      "medium": 16,
+      "large": 24
+    },
+    "componentPadding": {
+      "cards": 16,
+      "buttons": { "vertical": 12, "horizontal": 24 },
+      "listItems": { "vertical": 12, "horizontal": 16 }
+    },
+    "elementSpacing": {
+      "listItemGap": 8,
+      "gridGap": 12
+    }
+  },
+  "layoutArchitecture": {
+    "screenAnatomy": "Description of typical screen structure from top to bottom",
+    "bottomCtaTreatment": "fixed|sticky|inline|none",
+    "safeAreaHandling": "How safe areas are handled",
+    "scrollingBehavior": "Scroll patterns and fixed elements",
+    "contentDensity": "high|medium|low"
+  },
+  "componentInventory": {
+    "buttons": {
+      "primaryButton": {
+        "size": "48px height",
+        "borderRadius": 12,
+        "backgroundColor": "#RRGGBB",
+        "textStyle": "16pt semibold",
+        "shadow": "0 2px 8px rgba(0,0,0,0.1)"
+      },
+      "secondaryButton": {
+        "variations": "Outline style with primary color border"
+      },
+      "textButton": {
+        "treatment": "Text only, no background"
+      },
+      "iconButton": {
+        "size": "40px",
+        "treatment": "Round with subtle background"
+      }
+    },
+    "cards": {
+      "appearance": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E5E5E5",
+        "shadow": "0 2px 4px rgba(0,0,0,0.05)",
+        "borderRadius": 12
+      },
+      "padding": 16,
+      "states": {
+        "selected": "Primary color border",
+        "pressed": "Slight scale down"
+      }
+    },
+    "inputs": {
+      "defaultState": {
+        "border": "1px solid #E5E5E5",
+        "background": "#F9F9F9",
+        "textStyle": "16pt regular"
+      },
+      "focusedState": {
+        "treatment": "Primary color border, white background"
+      },
+      "errorState": {
+        "indication": "Red border with error message below"
+      },
+      "placeholderStyle": "Gray muted text"
+    },
+    "navigation": {
+      "header": {
+        "height": 64,
+        "background": "#FFFFFF",
+        "shadow": "0 1px 3px rgba(0,0,0,0.1)"
+      },
+      "backButton": {
+        "style": "Left arrow icon",
+        "position": "Top left"
+      },
+      "tabBar": {
+        "height": 80,
+        "hasIcons": true,
+        "hasLabels": true
+      }
+    },
+    "lists": {
+      "itemStructure": "Horizontal layout with icon/image, text, and accessory",
+      "separatorStyle": "lines|spacing|none",
+      "separatorSpacing": 1
+    },
+    "modals": {
+      "backgroundTreatment": "Semi-transparent dark overlay",
+      "cardStyle": {
+        "size": "90% width, auto height",
+        "position": "center",
+        "borderRadius": 16
+      },
+      "closeMechanism": "X button top right, tap outside to dismiss"
+    },
+    "progressIndicators": {
+      "loadingStates": "Spinning circle or skeleton screens",
+      "progressBars": "Linear with primary color fill"
+    },
+    "other": ["Any unique components not covered above"]
   },
   "overallStyle": "string",
   "targetAudience": "string",

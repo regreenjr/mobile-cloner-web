@@ -193,18 +193,29 @@ export const ANALYSIS_TABS: TabConfig[] = [
 
 /**
  * Color labels for the color palette display
+ * Using Partial since many ColorPalette fields are optional
  */
-export const COLOR_LABELS: Record<keyof ColorPalette, string> = {
+export const COLOR_LABELS: Partial<Record<keyof ColorPalette, string>> = {
   primary: "Primary",
+  primaryLight: "Primary Light",
+  primaryDark: "Primary Dark",
   secondary: "Secondary",
+  secondaryLight: "Secondary Light",
+  secondaryDark: "Secondary Dark",
   accent: "Accent",
   background: "Background",
+  backgroundSecondary: "Background Alt",
   surface: "Surface",
+  surfaceSecondary: "Surface Alt",
   text: "Text",
   textSecondary: "Text Secondary",
+  textMuted: "Text Muted",
+  border: "Border",
+  borderLight: "Border Light",
   success: "Success",
   warning: "Warning",
   error: "Error",
+  info: "Info",
 }
 
 /**
