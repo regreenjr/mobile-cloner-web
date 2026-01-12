@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ThumbsUp, Check, Download, Sparkles, Type, Palette, Layers } from "lucide-react"
+import { ThumbsUp, Check, Download, Sparkles, Type, Palette, Layers, Smartphone } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
@@ -377,6 +377,239 @@ export function ComponentPreview({
 }
 
 /**
+ * DesignMockupPreview - Shows a full phone mockup rendering of the design
+ */
+export function DesignMockupPreview({
+  direction,
+  className,
+}: {
+  direction: DesignDirection
+  className?: string
+}) {
+  const { colorPalette, typography, componentPatterns, name } = direction
+
+  return (
+    <div className={cn("space-y-3", className)}>
+      <div className="flex items-center gap-2">
+        <Smartphone className="h-4 w-4 text-muted-foreground" />
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          Preview
+        </span>
+      </div>
+
+      {/* Phone frame */}
+      <div className="relative mx-auto max-w-sm">
+        {/* Phone mockup container */}
+        <div
+          className="relative rounded-[2rem] border-[14px] border-gray-800 shadow-2xl overflow-hidden"
+          style={{ aspectRatio: '9/19.5' }}
+        >
+          {/* Screen content */}
+          <div
+            className="h-full w-full overflow-y-auto"
+            style={{ backgroundColor: colorPalette.background }}
+          >
+            {/* Status bar */}
+            <div
+              className="flex items-center justify-between px-6 py-3"
+              style={{ backgroundColor: colorPalette.surface || colorPalette.background }}
+            >
+              <div className="text-xs font-semibold" style={{ color: colorPalette.text }}>
+                9:41
+              </div>
+              <div className="flex gap-1">
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.primary }} />
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.secondary }} />
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: colorPalette.accent }} />
+              </div>
+            </div>
+
+            {/* Main content area */}
+            <div className="p-6 space-y-5">
+              {/* Header */}
+              <div className="space-y-2">
+                <h1
+                  className="text-2xl font-bold"
+                  style={{
+                    fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+                    color: colorPalette.text,
+                    fontWeight: typography.fontWeight.bold,
+                  }}
+                >
+                  {name}
+                </h1>
+                <p
+                  className="text-sm"
+                  style={{
+                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                    color: colorPalette.textSecondary,
+                  }}
+                >
+                  Design preview in action
+                </p>
+              </div>
+
+              {/* Featured Card */}
+              <div
+                className="p-5 space-y-3"
+                style={{
+                  backgroundColor: colorPalette.surface || colorPalette.background,
+                  borderRadius: `${componentPatterns.cards.borderRadius}px`,
+                  border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border || colorPalette.borderLight}` : 'none',
+                  boxShadow: componentPatterns.cards.hasShadow
+                    ? componentPatterns.cards.shadowIntensity === 'strong'
+                      ? '0 10px 25px -5px rgb(0 0 0 / 0.1)'
+                      : componentPatterns.cards.shadowIntensity === 'medium'
+                      ? '0 4px 10px -2px rgb(0 0 0 / 0.08)'
+                      : '0 2px 4px -1px rgb(0 0 0 / 0.05)'
+                    : 'none',
+                }}
+              >
+                <div
+                  className="h-32 w-full rounded-lg"
+                  style={{
+                    background: `linear-gradient(135deg, ${colorPalette.primary}, ${colorPalette.accent})`,
+                  }}
+                />
+                <h3
+                  className="text-base font-semibold"
+                  style={{
+                    fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+                    color: colorPalette.text,
+                    fontWeight: typography.fontWeight.semibold,
+                  }}
+                >
+                  Featured Content
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{
+                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                    color: colorPalette.textSecondary,
+                  }}
+                >
+                  This is how content cards appear in the design system
+                </p>
+              </div>
+
+              {/* Buttons Row */}
+              <div className="flex gap-3">
+                {/* Primary Button */}
+                <button
+                  className="flex-1 py-3 px-4 text-sm font-semibold transition-transform active:scale-95"
+                  style={{
+                    backgroundColor: colorPalette.primary,
+                    color: colorPalette.background,
+                    borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+                    boxShadow: componentPatterns.buttons.hasShadow ? '0 2px 4px 0 rgb(0 0 0 / 0.1)' : 'none',
+                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                  }}
+                >
+                  Primary
+                </button>
+
+                {/* Secondary Button */}
+                {componentPatterns.buttons.variants.includes('outline') && (
+                  <button
+                    className="flex-1 py-3 px-4 text-sm font-semibold border-2 transition-transform active:scale-95"
+                    style={{
+                      borderColor: colorPalette.primary,
+                      color: colorPalette.primary,
+                      backgroundColor: 'transparent',
+                      borderRadius: `${componentPatterns.buttons.borderRadius}px`,
+                      fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                    }}
+                  >
+                    Secondary
+                  </button>
+                )}
+              </div>
+
+              {/* List Items */}
+              <div className="space-y-3">
+                {[1, 2, 3].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 p-4"
+                    style={{
+                      backgroundColor: colorPalette.surface || colorPalette.background,
+                      borderRadius: `${componentPatterns.cards.borderRadius}px`,
+                      border: componentPatterns.cards.hasBorder ? `1px solid ${colorPalette.border || colorPalette.borderLight}` : 'none',
+                    }}
+                  >
+                    <div
+                      className="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold"
+                      style={{ backgroundColor: colorPalette.accent }}
+                    >
+                      {item}
+                    </div>
+                    <div className="flex-1">
+                      <div
+                        className="text-sm font-medium"
+                        style={{
+                          fontFamily: `'${typography.fontFamily.primary}', sans-serif`,
+                          color: colorPalette.text,
+                        }}
+                      >
+                        List Item {item}
+                      </div>
+                      <div
+                        className="text-xs"
+                        style={{
+                          fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                          color: colorPalette.textSecondary,
+                        }}
+                      >
+                        Subtitle text here
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Input Field Example */}
+              <div className="space-y-2">
+                <label
+                  className="text-sm font-medium"
+                  style={{
+                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                    color: colorPalette.text,
+                  }}
+                >
+                  Input Field
+                </label>
+                <div
+                  className="px-4 py-3 text-sm"
+                  style={{
+                    backgroundColor: colorPalette.surface || colorPalette.background,
+                    borderRadius: `${componentPatterns.inputs.borderRadius}px`,
+                    border: componentPatterns.inputs.borderStyle === 'solid'
+                      ? `1px solid ${colorPalette.border || colorPalette.borderLight}`
+                      : componentPatterns.inputs.borderStyle === 'underline'
+                      ? 'none'
+                      : 'none',
+                    borderBottom: componentPatterns.inputs.borderStyle === 'underline'
+                      ? `2px solid ${colorPalette.primary}`
+                      : undefined,
+                    color: colorPalette.textMuted,
+                    fontFamily: `'${typography.fontFamily.secondary}', sans-serif`,
+                  }}
+                >
+                  Enter text here...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-3xl" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
  * MoodKeywordBadges - Displays mood keywords as badges
  */
 function MoodKeywordBadges({
@@ -606,6 +839,9 @@ export function DesignDirectionCard({
       </CardHeader>
 
       <CardContent className="space-y-5">
+        {/* Full Mockup Preview */}
+        <DesignMockupPreview direction={direction} />
+
         {/* Color Palette Preview */}
         <ColorPalettePreview palette={colorPalette} />
 
