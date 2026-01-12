@@ -58,7 +58,6 @@ function createApiError(
     message,
     userMessage: userMessage || message,
     retryable: code === 'RATE_LIMITED' || code === 'NETWORK_ERROR',
-    timestamp: new Date().toISOString(),
   };
 }
 
